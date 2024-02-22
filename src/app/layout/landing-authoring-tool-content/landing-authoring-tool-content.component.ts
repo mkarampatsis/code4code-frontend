@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ButtonVideoComponent } from 'src/app/ui';
+import { ButtonVideoComponent } from 'src/app/shared/ui';
 
 @Component({
   selector: 'layout-landing-authoring-tool-content',

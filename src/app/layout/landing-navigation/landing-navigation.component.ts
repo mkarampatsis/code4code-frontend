@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
-import { ButtonVideoComponent } from '@c4c/ui';
+import { ButtonVideoComponent } from 'src/app/shared/ui';
 
 @Component({
   selector: 'layout-landing-navigation',

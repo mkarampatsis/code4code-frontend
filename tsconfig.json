@@ -17,7 +17,7 @@
     "lib": ["ES2022", "dom"],
     "paths": {
       "@c4c/environments": ["./src/environments"],
-      "@c4c/ui": ["./src/app/ui"],
+      "@c4c/ui": ["src/app/shared/ui"],
       "@c4c/layout": ["./src/app/layout"],
       "@c4c/student": ["./src/app/student"]
     }

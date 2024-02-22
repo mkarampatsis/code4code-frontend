@@ -3,7 +3,7 @@ import {
   FacebookIconComponent,
   TwitterIconComponent,
   YoutubeIconComponent,
-} from 'src/app/ui';
+} from 'src/app/shared/ui';
 
 @Component({
   selector: 'layout-footer',
