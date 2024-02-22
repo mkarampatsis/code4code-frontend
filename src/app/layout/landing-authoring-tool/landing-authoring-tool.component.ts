@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { LandingNavigationComponent } from '../landing-navigation/landing-navigation.component';
 import { LandingAuthoringToolContentComponent } from '../landing-authoring-tool-content/landing-authoring-tool-content.component';
-import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
   selector: 'layout-landing-authoring-tool',

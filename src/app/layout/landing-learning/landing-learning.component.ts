@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LandingNavigationComponent } from '../landing-navigation/landing-navigation.component';
 import { LandingLearningContentComponent } from '../landing-learning-content/landing-learning-content.component';
-import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
   selector: 'layout-landing-learning',
