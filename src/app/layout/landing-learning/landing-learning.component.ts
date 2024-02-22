@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LandingNavigationComponent } from '../landing-navigation/landing-navigation.component';
+import { LandingNavigationComponent } from '../shared/landing-navigation/landing-navigation.component';
 import { LandingLearningContentComponent } from '../landing-learning-content/landing-learning-content.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 
