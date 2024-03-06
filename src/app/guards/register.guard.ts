@@ -1,18 +1,12 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AppState, loggedIn } from '@c4c/state';
-import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 export const registerGuard: CanActivateFn = (route, state) => {
-  const store = inject(Store<AppState>);
+  const authService = inject(AuthService);
   const router = inject(Router);
-  return store.select(loggedIn).pipe(
-    map((isLoggedIn) => {
-      if (!isLoggedIn) {
-        router.navigate(['']);
-      }
-      return isLoggedIn;
-    })
-  );
+  if (!authService.user()) {
+    router.navigate(['']);
+  }
+  return !!authService.user();
 };

@@ -11,13 +11,12 @@
       <div class="max-w-[800px] mx-auto self-center w-full">
         <div class="mb-24 text-center">
           <h2>
-            Welcome {{ firstName$ | async }}! Please complete your registration
-            below:
+            Welcome {{ firstName$ }}! Please complete your registration below:
           </h2>
           <div class="flex justify-center items-center">
             <img
               class="rounded-full object-cover w-64 h-64"
-              src="{{ photoUrl$ | async }}"
+              src="{{ photoUrl$ }}"
               alt="Your Image"
               (error)="onImageError($event)"
             />

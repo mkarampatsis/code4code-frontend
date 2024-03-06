@@ -28,6 +28,7 @@ export class AuthService {
               const { accessToken } = response;
               localStorage.setItem('accessToken', accessToken);
               this.user.set(user);
+              this.router.navigate(['c4c', 'register']);
             },
             error: (error) => {
               console.error(error);
