@@ -6,7 +6,7 @@ import {
 } from 'src/app/shared/ui';
 
 @Component({
-  selector: 'layout-footer',
+  selector: 'app-footer',
   standalone: true,
   imports: [FacebookIconComponent, TwitterIconComponent, YoutubeIconComponent],
   templateUrl: './footer.component.html',

@@ -1,33 +1,23 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-  effect,
-  inject,
-} from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { User } from 'src/app/shared/interfaces/user';
-// import {AppState, id, firstName, name, email, photoUrl } from '@c4c/state';
-// import { Store } from '@ngrx/store';
-import { Subject, take, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-  selector: 'layout-landing-register-form',
+  selector: 'app-landing-register',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './landing-register-content.component.html',
-  styleUrl: './landing-register-content.component.css',
+  templateUrl: './landing-register.component.html',
+  styleUrl: './landing-register.component.css',
 })
-export class LandingRegisterContentComponent {
+export class LandingRegisterComponent {
   @Output() registeredUser = new EventEmitter<Partial<User>>();
 
   authService = inject(AuthService);
@@ -44,11 +34,11 @@ export class LandingRegisterContentComponent {
   form = new FormGroup({
     email: new FormControl(
       { value: this.email$, disabled: true },
-      Validators.required
+      Validators.required,
     ),
     name: new FormControl(
       { value: this.name$, disabled: true },
-      Validators.required
+      Validators.required,
     ),
     category: new FormControl('', Validators.required),
   });

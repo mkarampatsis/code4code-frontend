@@ -12,7 +12,7 @@ import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { ButtonVideoComponent } from 'src/app/shared/ui';
 
 @Component({
-  selector: 'layout-landing-navigation',
+  selector: 'app-landing-navigation',
   standalone: true,
   imports: [
     CommonModule,

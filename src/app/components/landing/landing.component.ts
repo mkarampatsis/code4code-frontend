@@ -5,10 +5,10 @@ import { ButtonVideoComponent } from 'src/app/shared/ui';
 import { TileVideoComponent } from 'src/app/shared/ui/tile-video/tile-video.component';
 
 @Component({
-  selector: 'layout-landing-content',
+  selector: 'app-landing',
   standalone: true,
   imports: [CommonModule, RouterLink, TileVideoComponent, ButtonVideoComponent],
-  templateUrl: './landing-content.component.html',
-  styleUrl: './landing-content.component.css',
+  templateUrl: './landing.component.html',
+  styleUrl: './landing.component.css',
 })
-export class LandingContentComponent {}
+export class LandingComponent {}

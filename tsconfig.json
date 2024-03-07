@@ -14,13 +14,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": ["ES2022", "dom"],
-    "paths": {
-      "@c4c/environments": ["./src/environments"],
-      "@c4c/ui": ["src/app/shared/ui"],
-      "@c4c/layout": ["./src/app/layout"],
-      "@c4c/student": ["./src/app/student"]
-    }
+    "lib": ["ES2022", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
