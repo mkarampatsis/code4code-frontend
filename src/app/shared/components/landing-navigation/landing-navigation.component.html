@@ -31,7 +31,10 @@
       </ul>
     </div>
 
-    <div class="flex flex-row gap-4 items-center hidden lg:inline-flex">
+    <div
+      *ngIf="!user()"
+      class="flex flex-row gap-4 items-center hidden lg:inline-flex"
+    >
       <asl-google-signin-button type="standard"> </asl-google-signin-button>
     </div>
     <div class="inline-flex items-center gap-3 lg:hidden">

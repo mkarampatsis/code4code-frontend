@@ -1,3 +1,8 @@
-<app-landing-navigation></app-landing-navigation>
+@if (user() && user().isEnabled) {
+  <app-user-navigation></app-user-navigation>
+} @else {
+  <app-landing-navigation></app-landing-navigation>
+}
+
 <router-outlet></router-outlet>
 <app-footer></app-footer>

@@ -10,6 +10,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { ButtonVideoComponent } from 'src/app/shared/ui';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-landing-navigation',
@@ -24,6 +25,9 @@ import { ButtonVideoComponent } from 'src/app/shared/ui';
   styleUrl: './landing-navigation.component.css',
 })
 export class LandingNavigationComponent implements AfterViewInit {
+  authService = inject(AuthService);
+  user = this.authService.user;
+
   @ViewChild('mobileMenu') mobileMenu!: ElementRef;
   mobileMenuRef!: ElementRef;
   renderer = inject(Renderer2);
