@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy": "ng build && rsync -avz --delete dist/code4code-frontend/browser/* marcos@10.77.0.10:frontend"
   },
   "private": true,
   "dependencies": {
