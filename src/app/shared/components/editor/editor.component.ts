@@ -3,9 +3,12 @@ import {
     Component,
     ElementRef,
     Input,
+    OnDestroy,
     ViewChild,
     ViewEncapsulation,
+    forwardRef,
 } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { basicSetup } from 'codemirror';
 import {
     EditorView,
@@ -15,10 +18,17 @@ import {
     keymap,
 } from '@codemirror/view';
 import { indentWithTab } from '@codemirror/commands';
-import { EditorState, Extension, Compartment } from '@codemirror/state';
+import {
+    EditorState,
+    Extension,
+    Compartment,
+    StateEffect,
+    StateField,
+} from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
 import { dracula, draculaInit } from '@uiw/codemirror-theme-dracula';
+import { indentationMarkers } from '@replit/codemirror-indentation-markers';
 
 @Component({
     selector: 'app-editor',
@@ -27,24 +37,43 @@ import { dracula, draculaInit } from '@uiw/codemirror-theme-dracula';
     templateUrl: './editor.component.html',
     styleUrl: './editor.component.css',
     encapsulation: ViewEncapsulation.None,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => EditorComponent),
+            multi: true,
+        },
+    ],
 })
-export class EditorComponent implements AfterViewInit {
+export class EditorComponent
+    implements AfterViewInit, ControlValueAccessor, OnDestroy
+{
     @Input() codeType: string;
     @ViewChild('editor') editorDIV: ElementRef;
     editor: EditorView;
     state: EditorState;
     extensions: Extension[];
 
+    private onChange: (value: string) => void;
+    private onTouched: () => void;
+
     ngAfterViewInit(): void {
         const editorElement = this.editorDIV.nativeElement;
         const extensions = [
             basicSetup,
+            indentationMarkers(),
             keymap.of([indentWithTab]),
             this.codeType === 'javascript' ? javascript() : python(),
-            gutter({}),
             EditorView.lineWrapping,
+            EditorView.updateListener.of((update) => {
+                if (update.docChanged) {
+                    this.onChange(update.state.doc.toString());
+                    this.onTouched();
+                }
+            }),
             dracula,
         ];
+
         this.editor = new EditorView({
             state: EditorState.create({
                 doc: '',
@@ -52,5 +81,29 @@ export class EditorComponent implements AfterViewInit {
             }),
             parent: editorElement,
         });
+    }
+
+    ngOnDestroy(): void {
+        this.editor.destroy();
+    }
+
+    writeValue(value: string): void {
+        if (this.editor) {
+            this.editor.dispatch({
+                changes: {
+                    from: 0,
+                    to: this.editor.state.doc.length,
+                    insert: value,
+                },
+            });
+        }
+    }
+
+    registerOnChange(fn: (value: string) => void): void {
+        this.onChange = fn;
+    }
+
+    registerOnTouched(fn: () => void): void {
+        this.onTouched = fn;
     }
 }
