@@ -6,32 +6,18 @@ import {
     Input,
     OnDestroy,
     ViewChild,
-    ViewEncapsulation,
     forwardRef,
     inject,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { basicSetup } from 'codemirror';
-import {
-    EditorView,
-    gutter,
-    GutterMarker,
-    lineNumbers,
-    keymap,
-} from '@codemirror/view';
+import { EditorView, keymap } from '@codemirror/view';
 import { indentWithTab } from '@codemirror/commands';
-import {
-    EditorState,
-    Extension,
-    Compartment,
-    StateEffect,
-    StateField,
-} from '@codemirror/state';
+import { EditorState, Extension } from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
-import { dracula, draculaInit } from '@uiw/codemirror-theme-dracula';
+import { dracula } from '@uiw/codemirror-theme-dracula';
 import { indentationMarkers } from '@replit/codemirror-indentation-markers';
-import { set } from 'lodash-es';
 
 @Component({
     selector: 'app-editor',
@@ -39,7 +25,6 @@ import { set } from 'lodash-es';
     imports: [],
     templateUrl: './editor.component.html',
     styleUrl: './editor.component.css',
-    encapsulation: ViewEncapsulation.None,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -51,7 +36,7 @@ import { set } from 'lodash-es';
 export class EditorComponent
     implements AfterViewInit, ControlValueAccessor, OnDestroy
 {
-    @Input() codeType: string;
+    @Input() codeType: string = 'javascript';
     @ViewChild('editor') editorDIV: ElementRef;
     editor: EditorView;
     state: EditorState;
