@@ -12,7 +12,8 @@ import { EditorComponent } from 'src/app/shared/components/editor/editor.compone
 })
 export class DashboardComponent implements OnInit {
     form = new FormGroup({
-        code: new FormControl(''),
+        code: new FormControl('for x in range(1):\n  print(x)'),
+        // code: new FormControl(''),
     });
 
     ngOnInit(): void {

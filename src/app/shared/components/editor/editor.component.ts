@@ -1,5 +1,6 @@
 import {
     AfterViewInit,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     Input,
@@ -7,6 +8,7 @@ import {
     ViewChild,
     ViewEncapsulation,
     forwardRef,
+    inject,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { basicSetup } from 'codemirror';
@@ -29,6 +31,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
 import { dracula, draculaInit } from '@uiw/codemirror-theme-dracula';
 import { indentationMarkers } from '@replit/codemirror-indentation-markers';
+import { set } from 'lodash-es';
 
 @Component({
     selector: 'app-editor',
@@ -54,33 +57,43 @@ export class EditorComponent
     state: EditorState;
     extensions: Extension[];
 
+    cdr = inject(ChangeDetectorRef);
+
+    private initialValue: string;
     private onChange: (value: string) => void;
     private onTouched: () => void;
 
     ngAfterViewInit(): void {
-        const editorElement = this.editorDIV.nativeElement;
-        const extensions = [
-            basicSetup,
-            indentationMarkers(),
-            keymap.of([indentWithTab]),
-            this.codeType === 'javascript' ? javascript() : python(),
-            EditorView.lineWrapping,
-            EditorView.updateListener.of((update) => {
-                if (update.docChanged) {
-                    this.onChange(update.state.doc.toString());
-                    this.onTouched();
-                }
-            }),
-            dracula,
-        ];
+        setTimeout(() => {
+            const editorElement = this.editorDIV.nativeElement;
+            const extensions = [
+                basicSetup,
+                indentationMarkers(),
+                keymap.of([indentWithTab]),
+                this.codeType === 'javascript' ? javascript() : python(),
+                EditorView.lineWrapping,
+                EditorView.updateListener.of((update) => {
+                    if (update.docChanged) {
+                        this.onChange(update.state.doc.toString());
+                        this.onTouched();
+                    }
+                }),
+                dracula,
+            ];
 
-        this.editor = new EditorView({
-            state: EditorState.create({
-                doc: '',
-                extensions,
-            }),
-            parent: editorElement,
-        });
+            this.editor = new EditorView({
+                state: EditorState.create({
+                    doc: '',
+                    extensions,
+                }),
+                parent: editorElement,
+            });
+
+            if (this.initialValue) {
+                this.writeValue(this.initialValue);
+                this.initialValue = null;
+            }
+        }, 0);
     }
 
     ngOnDestroy(): void {
@@ -96,6 +109,8 @@ export class EditorComponent
                     insert: value,
                 },
             });
+        } else {
+            this.initialValue = value;
         }
     }
 
