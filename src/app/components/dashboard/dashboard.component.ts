@@ -2,11 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
+import { ProseComponent } from 'src/app/shared/components/prose/prose.component';
 
 @Component({
     selector: 'app-dashboard',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, EditorComponent],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        EditorComponent,
+        ProseComponent,
+    ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
 })
