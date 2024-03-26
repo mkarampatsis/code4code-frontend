@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
 import { ProseComponent } from 'src/app/shared/components/prose/prose.component';
+import { TerminalComponent } from 'src/app/shared/components/terminal/terminal.component';
 
 @Component({
     selector: 'app-dashboard',
@@ -12,6 +13,7 @@ import { ProseComponent } from 'src/app/shared/components/prose/prose.component'
         ReactiveFormsModule,
         EditorComponent,
         ProseComponent,
+        TerminalComponent,
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
