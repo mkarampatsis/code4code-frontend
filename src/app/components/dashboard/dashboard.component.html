@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<div class="container mt-2">
+    <app-prose></app-prose>
+    <form [formGroup]="form">
+        <app-editor formControlName="code" [codeType]="'python'"></app-editor>
+        <button class="btn btn-primary" (click)="submit()">Run</button>
+    </form>
+    <app-terminal></app-terminal>
+</div>
