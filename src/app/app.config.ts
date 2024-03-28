@@ -14,6 +14,7 @@ import {
 } from '@abacritt/angularx-social-login';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
 import { JwtModule } from '@auth0/angular-jwt';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -52,6 +53,6 @@ export const appConfig: ApplicationConfig = {
           console.log(err);
         },
       } as SocialAuthServiceConfig,
-    },
+    }, provideAnimationsAsync(),
   ],
 };

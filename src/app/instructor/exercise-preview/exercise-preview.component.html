@@ -2,9 +2,22 @@
   
   <section>
     <div class="container">
-      <div class="max-w-[800px] mx-auto self-center w-full">
+      <div class="max-w-[1000px] mx-auto self-center w-full">
         <div class="mb-10 text-center">
           <h2>Exercise Preview</h2>
+            <ag-grid-angular
+                [domLayout]="'autoHeight'"
+                [rowData]="exercises"
+                [defaultColDef]="defaultColDef"
+                [columnDefs]="colDefs"
+                [pagination]="true"
+                [paginationPageSize]="50"
+                [loadingOverlayComponent]="loadingOverlayComponent"
+                [loadingOverlayComponentParams]="loadingOverlayComponentParams"
+                (gridReady)="onGridReady($event)"
+                class="ag-theme-balham"
+            >
+            </ag-grid-angular>
         </div>
       </div>
     </div>
