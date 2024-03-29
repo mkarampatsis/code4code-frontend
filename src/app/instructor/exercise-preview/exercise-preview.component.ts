@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation  } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { GridLoadingOverlayComponent } from 'src/app/shared/modals/grid-loading-overlay/grid-loading-overlay.component';
@@ -9,20 +9,15 @@ import { RouterModule } from '@angular/router';
 import { map, take } from 'rxjs';
 import { ConstService } from 'src/app/shared/services/const.service';
 
-interface IRow {
-    make: string;
-    model: string;
-    price: number;
-    electric: boolean;
-  }
-  
 @Component({
   selector: 'app-exercise-preview',
   standalone: true,
   imports: [RouterModule,AgGridAngular, GridLoadingOverlayComponent],
   templateUrl: './exercise-preview.component.html',
-  styleUrl: './exercise-preview.component.css'
+  styleUrl: './exercise-preview.component.css',
+  encapsulation: ViewEncapsulation.None
 })
+
 export class ExercisePreviewComponent {
     constService = inject(ConstService);
     exerciseService = inject(ExerciseService);
@@ -33,14 +28,14 @@ export class ExercisePreviewComponent {
     colDefs: ColDef[] = [
         { field: 'author.name', headerName: 'Author', flex: 1 },
         { field: 'type', headerName: 'Languange', flex: 1 },
-        { field: 'chapter', headerName: 'Chapter'},
+        { field: 'category.chapter', headerName: 'Chapter'},
         { field: 'difficulty', headerName: 'Difficulty', flex: 1 },
-        { field: 'actionCell', headerName: 'Ενέργειες', cellRenderer: ActionIconsComponent,  filter: false, sortable: false, floatingFilter:false, flex: 1, resizable: false},
+        { field: 'actionCell', headerName: 'Actions', cellRenderer: ActionIconsComponent,  filter: false, sortable: false, floatingFilter:false, flex: 1, resizable: false},
     ];
     autoSizeStrategy = this.constService.autoSizeStrategy;
     
     loadingOverlayComponent = GridLoadingOverlayComponent;
-    loadingOverlayComponentParams = { loadingMessage: 'Αναζήτηση φορέων...' };
+    loadingOverlayComponentParams = { loadingMessage: 'Exercise loading...' };
 
     gridApi: GridApi<IExercise>;
 

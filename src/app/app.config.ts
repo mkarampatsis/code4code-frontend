@@ -53,6 +53,6 @@ export const appConfig: ApplicationConfig = {
           console.log(err);
         },
       } as SocialAuthServiceConfig,
-    }, provideAnimationsAsync(),
+    }, provideAnimationsAsync(), provideAnimationsAsync(),
   ],
 };

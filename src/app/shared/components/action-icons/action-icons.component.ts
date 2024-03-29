@@ -27,6 +27,7 @@ export class ActionIconsComponent implements ICellRendererAngularComp {
     }
 
     showExerciseDetails(): void {
+        console.log(this.params.data.exercise, this.params.data._id);
         this.modalService.showExerciseDetails(this.params.data.exercise);
     }
 

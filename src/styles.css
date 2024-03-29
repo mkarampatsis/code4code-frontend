@@ -1,7 +1,9 @@
 @import "ag-grid-community/styles/ag-grid.css";
 @import "ag-grid-community/styles/ag-theme-balham.css";
 
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
+/* @import "@angular/material/prebuilt-themes/indigo-pink.css"; */
+/* Removed from angular.json */
+/* "@angular/material/prebuilt-themes/indigo-pink.css", */
 
 @import url("https://use.typekit.net/ejh2zyh.css");
 
@@ -2360,6 +2362,3 @@ label {
     padding-right: 5rem;
   }
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

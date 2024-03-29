@@ -10,23 +10,24 @@ import {
   providedIn: 'root',
 })
 export class ConstService {
-  USER_CATEGORIES = ['student', 'teacher', 'institution'];
+//   USER_CATEGORIES = ['student', 'teacher', 'institution'];
+    USER_CATEGORIES = ['learner', 'instructor'];
 
-  USER_COURSE = ['python', 'javascript'];
+    USER_COURSE = ['python', 'javascript'];
 
-  USER_LEVEL = ['novice', 'beginner', 'intermediate', 'expert'];
+    USER_LEVEL = ['novice', 'beginner', 'intermediate', 'expert'];
 
-  NUMBER_REGEX = /^[-+]?\d*\.?\d+$/;
+    NUMBER_REGEX = /^[-+]?\d*\.?\d+$/;
 
-   // AgGrid related constants
-   defaultColDef = {
-    resizable: true,
-    filter: true,
-    sortable: true,
-    floatingFilter: true,
-};
-autoSizeStrategy:
-    | SizeColumnsToFitGridStrategy
-    | SizeColumnsToFitProvidedWidthStrategy
-    | SizeColumnsToContentStrategy = { type: 'fitCellContents' }
+    // AgGrid related constants
+    defaultColDef = {
+        resizable: true,
+        filter: true,
+        sortable: true,
+        floatingFilter: true,
+    };
+    autoSizeStrategy:
+        | SizeColumnsToFitGridStrategy
+        | SizeColumnsToFitProvidedWidthStrategy
+        | SizeColumnsToContentStrategy = { type: 'fitCellContents' }
 }

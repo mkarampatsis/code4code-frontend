@@ -72,4 +72,20 @@ export class AuthService {
             req,
         );
     }
+
+    pythonEvalution(){
+        const evaluation = this.user()
+            .evaluations.filter((data) => {
+                  return data.course === 'python'
+            })
+        return evaluation.length > 0;
+    }
+
+    javascriptEvalution(){
+        const evaluation = this.user()
+            .evaluations.filter((data) => {
+                  return data.course === 'javascript'
+            })
+        return evaluation.length > 0;
+    }
 }

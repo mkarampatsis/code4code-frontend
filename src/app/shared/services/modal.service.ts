@@ -12,12 +12,12 @@ import {
 export class ModalService {
     modalService = inject(NgbModal);
 
-    showExerciseDetails(organizationCode: string) {
+    showExerciseDetails(exerciseID: string) {
         const modalRef = this.modalService.open(ExerciseDetailsComponent, {
             size: 'xl',
             centered: true,
         });
-        modalRef.componentInstance.organizationCode = organizationCode;
+        modalRef.componentInstance.exerciseID = exerciseID;
         modalRef.componentInstance.modalRef = modalRef;
     }
 
