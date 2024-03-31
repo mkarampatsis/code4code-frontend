@@ -5,13 +5,14 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-user-navigation',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NgIf],
   templateUrl: './user-navigation.component.html',
   styleUrl: './user-navigation.component.css',
 })

@@ -1,19 +1,15 @@
-<main class="py-5 mt-3 lg:mt-4">
-    <div class="flex gap-4 justify-content-around px-3">
-        <div class="flex-1">
-            <app-prose></app-prose>
-        </div>
-        <div class="flex-1">
-            <form [formGroup]="form">
-                <app-editor
-                    formControlName="code"
-                    [codeType]="'python'"
-                ></app-editor>
-                <button class="btn btn-primary" (click)="submit()">Run</button>
-            </form>
-        </div>
-        <div class="flex-1">
-            <app-terminal></app-terminal>
-        </div>
-    </div>
-</main>
+@if (user().category.includes("instructor")) {
+    <app-instructor-dashboard></app-instructor-dashboard>
+} @else if (user().category.includes("learner")) {
+    <app-learner-dashboard></app-learner-dashboard>
+} @else {
+    <app-administrator-dashboard></app-administrator-dashboard>
+}
+<!-- <div class="container mt-2">
+    <app-prose></app-prose>
+    <form [formGroup]="form">
+        <app-editor formControlName="code" [codeType]="'python'"></app-editor>
+        <button class="btn btn-primary" (click)="submit()">Run</button>
+    </form>
+    <app-terminal></app-terminal>
+</div> -->

@@ -3,8 +3,9 @@ import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 import { IProfileUpdateRequest } from '../interfaces/profileUpdateRequest.interface';
-import { IUser } from '../interfaces/user';
+import { IUser, IUserEvaluation } from '../interfaces/user';
 
 @Injectable({
     providedIn: 'root',

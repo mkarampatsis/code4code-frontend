@@ -1,0 +1,30 @@
+/* @import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-balham.css";
+
+h2 {
+    margin-bottom: 2.25rem;
+    font-weight: 800;
+}
+
+.mb-10 {
+    margin-bottom: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+    h2 {
+        font-size: 45px;
+        line-height: 50px;
+    }
+} */
+
+input:not([type="checkbox"]):not([type="radio"]), textarea, select {
+    margin-bottom: 0rem;
+    border-radius: 0rem;
+    border-width: 1px;
+    border-style: solid;
+    --tw-border-opacity: 1;
+    border-color: rgb(66 75 84 / var(--tw-border-opacity));
+    background-color:white;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
