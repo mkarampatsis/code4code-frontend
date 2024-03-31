@@ -32,6 +32,7 @@
     "@uiw/codemirror-theme-dracula": "^4.21.25",
     "@xterm/addon-web-links": "^0.10.0",
     "@xterm/xterm": "^5.4.0",
+    "bootstrap": "^5.3.3",
     "codemirror": "^6.0.1",
     "lodash-es": "^4.17.21",
     "ng-terminal": "^6.1.1",
