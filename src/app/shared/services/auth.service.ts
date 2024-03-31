@@ -3,8 +3,9 @@ import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 import { IProfileUpdateRequest } from '../interfaces/profileUpdateRequest.interface';
-import { IUser } from '../interfaces/user';
+import { IUser, IUserEvaluation } from '../interfaces/user';
 
 @Injectable({
     providedIn: 'root',
@@ -71,21 +72,5 @@ export class AuthService {
             `${environment.apiURL}/auth/profile`,
             req,
         );
-    }
-
-    pythonEvalution(){
-        const evaluation = this.user()
-            .evaluations.filter((data) => {
-                  return data.course === 'python'
-            })
-        return evaluation.length > 0;
-    }
-
-    javascriptEvalution(){
-        const evaluation = this.user()
-            .evaluations.filter((data) => {
-                  return data.course === 'javascript'
-            })
-        return evaluation.length > 0;
     }
 }

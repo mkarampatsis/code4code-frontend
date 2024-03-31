@@ -13,16 +13,17 @@ export interface IUserAssessment {
 }
 
 export interface IUserEvaluationAnswer {
-  questionId: string;
-  answerText: string;
-  correct: boolean;
+    question_id: string;
+//   answerText: string;
+    correct: boolean;
 }
 
 export interface IUserEvaluation {
-  course: TUserCourse;
-  score: number;
-  date: Date;
-  answers: IUserEvaluationAnswer[];
+    course: TUserCourse;
+    score: number;
+    level: string;
+    date: Date;
+    answers: IUserEvaluationAnswer[];
 }
 
 export interface IUser {

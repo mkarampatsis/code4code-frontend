@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserEvaluationService } from 'src/app/shared/services/evaluation.service';
 
 @Component({
   selector: 'app-learner-dashboard',
@@ -11,14 +12,14 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class LearnerDashboardComponent {
     authService = inject(AuthService);
+    evaluationService = inject(UserEvaluationService)
 
     constructor(
         private router: Router
-      ) { }
+      ) {}
 
     checkPythonEvaluation() {
-        console.log(this.authService.pythonEvalution())
-        if (this.authService.pythonEvalution()){
+        if (this.evaluationService.pythonEvalution()){
             this.router.navigateByUrl('c4c/learner/python');
         } else {
             this.router.navigateByUrl('c4c/learner/python/evalution');
@@ -26,8 +27,7 @@ export class LearnerDashboardComponent {
     }
 
     checkJavascriptEvaluation() {
-        console.log(this.authService.javascriptEvalution)
-        if (this.authService.pythonEvalution()){
+        if (this.evaluationService.javascriptEvalution()){
             this.router.navigateByUrl('c4c/learner/javascript');
         } else {
             this.router.navigateByUrl('c4c/learner/javascript/evalution');
