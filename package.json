@@ -42,6 +42,8 @@
     "lodash-es": "^4.17.21",
     "ng-terminal": "^6.1.1",
     "ngx-editor": "^17.0.1",
+    "node-fetch": "^3.3.2",
+    "pyodide": "^0.25.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "xterm-addon-webgl": "^0.16.0",

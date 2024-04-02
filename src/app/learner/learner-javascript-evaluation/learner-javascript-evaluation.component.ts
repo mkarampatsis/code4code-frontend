@@ -83,7 +83,7 @@ export class LearnerJavascriptEvaluationComponent {
         const getGravity = (arr: any[]) => arr.map((data: string) => data.split('_')[2])
         
         let result: IUserEvaluation = {
-            course: "python",
+            course: "javascript",
             level: this.frmEvaluation.value.level,
             date: new Date(),
             score: 0,

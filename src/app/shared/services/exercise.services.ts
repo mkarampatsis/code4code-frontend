@@ -32,4 +32,9 @@ import { MLUserEvaluation } from 'src/app/shared/interfaces/ml';
         const url = `${environment.apiURL}/ml/user_assesment`;
         return this.http.post<IUserAssessment>(url, data);
     }
+
+    getLearnerExercise(course: string): Observable<IExercise> {
+        const url = `${environment.apiURL}/exercises/learner/${course}`;
+        return this.http.get<IExercise>(url);
+    }
 }

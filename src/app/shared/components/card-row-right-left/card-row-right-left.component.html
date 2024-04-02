@@ -3,10 +3,11 @@
         <div class="col-md-4 fw-semibold d-inline text-truncate">
             {{ keyValue.key }}
         </div>
+ 
         <div class="col-md-8">
             @if (isArray(keyValue.value)) {
                 @for (value of keyValue.value; track value) {
-                    {{ value }} <br />
+                    <span [innerHTML]="value"></span>
                 }
             } @else {
                 @if (isDateString(keyValue.value) && isDate(keyValue.value)) {
@@ -17,4 +18,5 @@
             }
         </div>
     </div>
+    <br><hr>
 }

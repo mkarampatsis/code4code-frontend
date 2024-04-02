@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <span class="fw-semibold">
-                Type: {{ exercise?.type }}</span>
+                Course: {{ exercise?.type }}</span>
             <span class="text-muted small">
                 Author: {{ exercise?.author.name }}</span
             >
@@ -18,74 +18,40 @@
         <div class="card-body">
             <app-card-row-right-left
                 [keyValue]="{
-                    key: 'Chapter',
-                    value: exercise?.category.chapter
-                }"
-            ></app-card-row-right-left>
-            <app-card-row-right-left
-                [keyValue]="{
-                    key: 'Description',
+                    key: 'Exercise Description',
                     value: exercise?.exercise_description
                 }"
             ></app-card-row-right-left>
-            <app-card-row-right-left
+            <app-card-row-right-left *ngIf="user.category.includes('instructor')"
                 [keyValue]="{
                     key: 'Code',
                     value: exercise?.code
                 }"
             ></app-card-row-right-left>
-            <app-card-row-right-left
+            <app-card-row-right-left *ngIf="user.category.includes('instructor')"
                 [keyValue]="{
                     key: 'Output',
                     value: exercise?.output
                 }"
             ></app-card-row-right-left>
-            <!-- <app-card-row-right-left
+            <app-card-row-right-left *ngIf="user.category.includes('learner')"
                 [keyValue]="{
-                    key: 'Κατάσταση',
-                    value: organization?.status
+                    key: 'Chapter',
+                    value: exercise?.category.chapter
                 }"
             ></app-card-row-right-left>
-            <app-card-row-right-left
+            <app-card-row-right-left *ngIf="user.category.includes('learner')"
                 [keyValue]="{
-                    key: 'Ημερομηνία Κύριας Ενημέρωσης',
-                    value: organization?.mainDataUpdateDate
+                    key: 'Introduction',
+                    value: exercise?.introduction
                 }"
             ></app-card-row-right-left>
-            <app-card-row-right-left
+            <app-card-row-right-left *ngIf="user.category.includes('learner')"
                 [keyValue]="{
-                    key: 'Ημερομηνία Ενημέρωσης Δομής Φορέα',
-                    value: organization?.organizationStructureUpdateDate
+                    key: 'Theory for exercise',
+                    value: exercise?.subintroduction
                 }"
             ></app-card-row-right-left>
-            <app-card-row-right-left
-                *ngIf="organization?.contactPoint"
-                [keyValue]="{
-                    key: 'Email Φορέα',
-                    value: organization?.contactPoint.email
-                }"
-            ></app-card-row-right-left>
-            <app-card-row-right-left
-                *ngIf="organization?.contactPoint"
-                [keyValue]="{
-                    key: 'Τηλέφωνο Φορέα',
-                    value: organization?.contactPoint.telephone
-                }"
-            ></app-card-row-right-left>
-            <app-card-row-right-left
-                *ngIf="organization?.mainAddress"
-                [keyValue]="{
-                    key: 'Ταχυδρομική Διεύθυνση',
-                    value: organization?.mainAddress.fullAddress
-                }"
-            ></app-card-row-right-left>
-            <app-card-row-right-left
-                *ngIf="organization?.secondaryAddresses"
-                [keyValue]="{
-                    key: 'Δευτερεύουσες Διευθύνσεις',
-                    value: fullAddressMap(organization?.secondaryAddresses)
-                }"
-            ></app-card-row-right-left> -->
         </div>
     </div>
 </div>
