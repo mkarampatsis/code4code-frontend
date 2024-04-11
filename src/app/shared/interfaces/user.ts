@@ -1,5 +1,5 @@
 // export type TUserCategory = 'student' | 'teacher' | 'institution';
-export type TUserCategory = 'learner' | 'instructor' | 'administrator';
+export type TUserCategory = 'learner' | 'instructor' | 'administrator'
 export type TUserCourse = 'python' | 'javascript';
 export type TUserLevel =
   | 'absolute_beginner'
@@ -26,6 +26,12 @@ export interface IUserEvaluation {
     answers: IUserEvaluationAnswer[];
 }
 
+export interface IUserRoles{
+    category: TUserCategory;
+    course: TUserCourse;
+    isEnabled: boolean;
+}
+
 export interface IUser {
   email: string;
   firstName: string;
@@ -36,7 +42,8 @@ export interface IUser {
   provider: string;
   isAdmin: boolean;
   isEnabled: boolean;
-  category?: [TUserCategory];
+//   category?: [TUserCategory];
   assessments?: IUserAssessment[];
   evaluations?: IUserEvaluation[];
+  roles?: IUserRoles[];
 }

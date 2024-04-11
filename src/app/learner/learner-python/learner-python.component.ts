@@ -10,7 +10,8 @@ import { ExerciseService } from 'src/app/shared/services/exercise.services';
 import { IExercise } from 'src/app/shared/interfaces/exercises';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { take } from 'rxjs';
-import { loadPyodide } from 'pyodide';
+
+declare let loadPyodide: any;
 
 @Component({
     selector: 'app-learner-python',
@@ -21,7 +22,7 @@ import { loadPyodide } from 'pyodide';
         PythonEditorComponent,
         ProseComponent,
         PythonTerminalComponent,
-        HintComponent
+        HintComponent,
     ],
     templateUrl: './learner-python.component.html',
     styleUrl: './learner-python.component.css'
@@ -30,8 +31,11 @@ import { loadPyodide } from 'pyodide';
 export class LearnerPythonComponent {
     modalService = inject(ModalService);
     exerciseService = inject(ExerciseService)
+    
     exercise: IExercise;
 
+    output: string
+    
     form = new FormGroup({
         code: new FormControl(''),
     });
@@ -47,11 +51,11 @@ export class LearnerPythonComponent {
         })
     }
 
-    ngOnInit(): void {
-        this.form.controls.code.valueChanges.subscribe((value) => {
-            console.log("XXX>>>",value);
-        });
-    }
+    // ngOnInit(): void {
+    //     this.form.controls.code.valueChanges.subscribe((value) => {
+    //         console.log("XXX>>>",value);
+    //     });
+    // }
 
     submit(): void {
         console.log(this.form.value);
@@ -62,16 +66,15 @@ export class LearnerPythonComponent {
         this.modalService.showExerciseDetails(this.exercise.exercise);
     }
 
-    runCode(){
-        // loadPyodide({
-        //     indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js',
-        //   }).then((pyodide) => {
-        //     pyodide.runPython('print("Hello from Python!")')
-        //   })
-             
-        console.log(this.form.value.code);
+    async runCode(){
+        let pyodide = await loadPyodide() 
+        let code = this.form.controls.code.value.toString();
+        pyodide.setStdout({ batched: (msg: string) => {
+                this.output = msg; 
+            }
+        });
+        pyodide.runPythonAsync(code)
     }
-
   
     nextExercise(){
         this.exerciseService

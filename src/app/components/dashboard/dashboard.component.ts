@@ -1,14 +1,9 @@
-// import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { LearnerDashboardComponent } from 'src/app/learner/learner-dashboard/learner-dashboard.component';
 import { InstructorDashboardComponent } from 'src/app/instructor/instructor-dashboard/instructor-dashboard.component';
 import { AdministratorDashboardComponent } from 'src/app/administrator/administrator-dashboard/administrator-dashboard.component';
-// import { Component, OnInit } from '@angular/core';
-// import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-// import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
-// import { ProseComponent } from 'src/app/shared/components/prose/prose.component';
-// import { TerminalComponent } from 'src/app/shared/components/terminal/terminal.component';
+import { ConstService } from 'src/app/shared/services/const.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -20,7 +15,10 @@ import { AdministratorDashboardComponent } from 'src/app/administrator/administr
 
 export class DashboardComponent {
     authService = inject(AuthService);
-    user = this.authService.user;
+    constService = inject(ConstService);
+
+    // ce = this.authService.user;
+    // categories = this.constService.PAY_CATEGORIES;
 }
 // export class DashboardComponent implements OnInit {
     

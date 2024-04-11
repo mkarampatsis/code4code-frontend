@@ -40,11 +40,18 @@
 
                     <!-- Code Editor -->
                     <form [formGroup]="form">
-                        <app-python-editor formControlName="code" [codeType]="'python'"></app-python-editor>
+                        <app-python-editor formControlName="code" [codeType]="'python'" ></app-python-editor>
                     </form>
 
-                    <!-- Instructions -->
-                    <app-python-terminal></app-python-terminal>
+                    
+                    <div>
+                        <div #preview class="text-white p-4 border rounded-lg lg:max-h-windows-height min-h-[300px] max-h-[600px] overflow-auto" [innerHtml]="output">                        
+                        </div>
+                        <br>
+                        <iframe class="text-white border rounded-lg lg:max-h-windows-height min-h-[600px] max-h-[800px] overflow-auto" src="https://pyodide.org/en/stable/console.html" frameborder="0"></iframe>
+                    </div>
+                    
+                    <!-- <app-pyodide></app-pyodide> -->
                     
                     <!-- <app-prose></app-prose>
                     <form [formGroup]="form">

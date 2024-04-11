@@ -45,17 +45,17 @@
           </li>
         </ul> -->
       </li>
-      <li *ngIf="user().category.includes('learner')" class="mb-0">
+      <li *ngIf="authService.isLearner()" class="mb-0">
         <a routerLink="c4c/learner/dashboard" class="transition hover:text-custom-green"
           >Learner</a
         >
       </li>
-      <li *ngIf="user().category.includes('instructor')" class="mb-0">
+      <li *ngIf="authService.isInstructor()" class="mb-0">
         <a routerLink="c4c/instructor/dashboard" class="transition hover:text-custom-green"
           >Instructor</a
         >
       </li>
-      <li *ngIf="user().category.includes('administrator')" class="mb-0">
+      <li *ngIf="authService.isAdministrator()" class="mb-0">
         <a routerLink="c4c/administrator/dashboard" class="transition hover:text-custom-green"
           >Administrator</a
         >

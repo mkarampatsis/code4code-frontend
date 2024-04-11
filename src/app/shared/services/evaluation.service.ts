@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 
 export class UserEvaluationService {
     authService = inject(AuthService);
-    user = this.authService.user();
+    user = this.authService;
     
     http = inject(HttpClient);
     router = inject(Router);
@@ -21,18 +21,10 @@ export class UserEvaluationService {
             `${environment.apiURL}/evaluation/user_evaluation`,req,);
     }
 
-    pythonEvalution(){
-        const evaluation = this.user
+    courseEvalution(course:string){
+        const evaluation = this.authService.user()
             .evaluations.filter((data) => {
-                    return data.course === 'python'
-            })
-        return evaluation.length > 0;
-    }
-
-    javascriptEvalution(){
-        const evaluation = this.user
-            .evaluations.filter((data) => {
-                    return data.course === 'javascript'
+                    return data.course === course
             })
         return evaluation.length > 0;
     }

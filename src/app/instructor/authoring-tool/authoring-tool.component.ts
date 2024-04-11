@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-authoring-tool',
@@ -15,42 +16,53 @@ import {
   templateUrl: './authoring-tool.component.html',
   styleUrl: './authoring-tool.component.css'
 })
-export class AuthoringToolComponent {
-  
-  form = new FormGroup({
-    introduction: new FormControl('', Validators.required),
-    subintroduction: new FormControl(''),
-    exercise_description: new FormControl('', Validators.required),
-    category: new FormGroup({
-      chapter: new FormControl(''),
-      subchapter: new FormArray([])
-    }),
-    hints: new FormArray([]),
-    author: new FormGroup({
-      name: new FormControl(''),
-      email: new FormControl('')
-    }),
-    type: new FormControl(''),
-    code: new FormControl(''),
-    output: new FormArray([])
-  });
+export class AuthoringToolComponent implements OnInit {
+    route = inject(ActivatedRoute);
+
+    course: string | undefined; 
+
+    form = new FormGroup({
+        introduction: new FormControl('', Validators.required),
+        subintroduction: new FormControl(''),
+        exercise_description: new FormControl('', Validators.required),
+        category: new FormGroup({
+            chapter: new FormControl(''),
+            subchapter: new FormArray([])
+        }),
+        hints: new FormArray([]),
+        author: new FormGroup({
+            name: new FormControl(''),
+            email: new FormControl('')
+        }),
+        course: new FormControl(''),
+        code: new FormControl(''),
+        output: new FormArray([])
+    });
 
 
-  addHint() {
-    const hintForm =  new FormGroup({
-      text: new FormControl(''),
-      code: new FormControl(''),
-      penalty: new FormControl('')          
-    })
+    constructor(){
+        this.course = this.route.snapshot.params['course'];
+    }
 
-    this.form.controls['hints'].push(hintForm)
-  }
+    ngOnInit(): void {
+        this.form.controls['course'].setValue(this.course);
+    }
 
-  deleteHint(hintIndex: number) {
-    this.form.controls['hints'].removeAt(hintIndex);
-  }
+    addHint() {
+        const hintForm =  new FormGroup({
+            text: new FormControl(''),
+            code: new FormControl(''),
+            penalty: new FormControl('')          
+         })
 
-  onSubmit() {
-    console.log(this.form.value)
-  }
+        this.form.controls['hints'].push(hintForm)
+    }
+
+    deleteHint(hintIndex: number) {
+        this.form.controls['hints'].removeAt(hintIndex);
+    }
+
+    onSubmit() {
+        console.log(this.form.value)
+    }
 }

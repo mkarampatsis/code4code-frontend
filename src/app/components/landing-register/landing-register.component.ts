@@ -11,10 +11,11 @@ import { ConstService } from 'src/app/shared/services/const.service';
 import { SubmitButtonComponent } from 'src/app/shared/ui/submit-button/submit-button.component';
 
 import { capitalize } from 'lodash-es';
-import { IUser, TUserCategory } from 'src/app/shared/interfaces/user';
-import { IProfileUpdateRequest } from 'src/app/shared/interfaces/profileUpdateRequest.interface';
-import { take } from 'rxjs';
-import { IProfileUpdateReply } from 'src/app/shared/interfaces/profileUpdateReply.interface';
+import { Router } from '@angular/router';
+// import { IUser, TUserCategory } from 'src/app/shared/interfaces/user';
+// import { IProfileUpdateRequest } from 'src/app/shared/interfaces/profileUpdateRequest.interface';
+// import { take } from 'rxjs';
+// import { IProfileUpdateReply } from 'src/app/shared/interfaces/profileUpdateReply.interface';
 
 @Component({
   selector: 'app-landing-register',
@@ -26,6 +27,7 @@ import { IProfileUpdateReply } from 'src/app/shared/interfaces/profileUpdateRepl
 export class LandingRegisterComponent {
   authService = inject(AuthService);
   constService = inject(ConstService);
+  router = inject(Router);
 
   categories = this.constService.USER_CATEGORIES;
 
@@ -56,19 +58,20 @@ export class LandingRegisterComponent {
   }
 
   onSubmit() {
-    const { category } = this.form.value;
-    const data = { category } as IProfileUpdateRequest;
-    this.authService
-      .updateProfile(data)
-      .pipe(take(1))
-      .subscribe({
-        next: (res: IProfileUpdateReply) => {
-          this.authService.user.set(res.user);
-          this.authService.router.navigate(['c4c', 'dashboard']);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+    this.router.navigate(['c4c/payform', this.form.value.category]);
+    // const { category } = this.form.value;
+    // const data = { category } as IProfileUpdateRequest;
+    // this.authService
+    //   .updateProfile(data)
+    //   .pipe(take(1))
+    //   .subscribe({
+    //     next: (res: IProfileUpdateReply) => {
+    //       this.authService.user.set(res.user);
+    //       this.authService.router.navigate(['c4c', 'dashboard']);
+    //     },
+    //     error: (err) => {
+    //       console.log(err);
+    //     },
+    //   });
   }
 }

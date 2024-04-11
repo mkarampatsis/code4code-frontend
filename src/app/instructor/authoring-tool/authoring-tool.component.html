@@ -4,13 +4,14 @@
         <div class="container">
             <div class="max-w-[800px] mx-auto self-center w-full">
                 <div class="mb-10 text-center">
-                    <h2>Create Exercise</h2>
+                    <h2>Create Exercise for {{course}}</h2>
                 </div>
             
                 <div>
                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                    <label for="type">Programming Language</label>
-                    <select name="type" id="type">
+                    
+                    <label for="course">Programming Language</label>
+                    <select name="course" id="course" formControlName="course">
                         <option value="" disabled selected>Select language</option>
                         <option value="python">Python</option>
                         <option value="javascript">Javascript</option>

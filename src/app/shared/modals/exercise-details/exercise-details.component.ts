@@ -36,7 +36,7 @@ export class ExerciseDetailsComponent {
         this.user = this.authService.user()
     }
 
-    checkCategory(category: string){
-        this.user.category.find((element)=>element===category)
-    }
+    // checkCategory(category: string){
+    //     this.user.category.find((element)=>element===category)
+    // }
 }

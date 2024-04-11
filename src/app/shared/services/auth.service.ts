@@ -73,4 +73,48 @@ export class AuthService {
             req,
         );
     }
+
+    isCourseLearner(course:string) {
+        const result = this.user().roles
+            .filter((data) => {
+                    return data.course === course && data.category === 'learner'  && data.isEnabled 
+            })
+
+        return result.length > 0;
+    }
+
+    isCourseInstructor(course:string) {
+        const result = this.user().roles
+            .filter((data) => {
+                    return data.course === course && data.category === 'instructor'  && data.isEnabled 
+            })
+        return result.length > 0;
+    }
+
+    isLearner() {
+        const result = this.user().roles
+        .filter((data) => {
+                return data.category === 'learner' && data.isEnabled
+        })
+        
+        return result.length > 0;
+    }
+
+    isInstructor() {
+        const result = this.user().roles
+        .filter((data) => {
+                return data.category === 'instructor' && data.isEnabled
+        })
+        
+        return result.length > 0;
+    }
+
+    isAdministrator() {
+        const result = this.user().roles
+        .filter((data) => {
+                return data.category === 'administrator' && data.isEnabled
+        })
+        
+        return result.length > 0;
+    }
 }

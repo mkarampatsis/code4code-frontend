@@ -11,6 +11,7 @@ import { LandingRegisterComponent } from './components/landing-register/landing-
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { PayformComponent } from './components/payform/payform.component';
 
 // Instructor Imports
 import { AuthoringToolComponent } from './instructor/authoring-tool/authoring-tool.component';
@@ -37,10 +38,11 @@ export const routes: Routes = [
   { path: 'c4c/contact', component:  ContactComponent},
   { path: 'c4c/register', component: LandingRegisterComponent, canActivate: [registerGuard], },
   { path: 'c4c/dashboard', component: DashboardComponent, canActivate: [loggedInGuard], },
+  { path: 'c4c/payform/:category', component: PayformComponent, canActivate: [loggedInGuard], },
   
   // Instructors Routes
   { path: 'c4c/instructor/dashboard', component: InstructorDashboardComponent },
-  { path: 'c4c/authoring-tool', component: AuthoringToolComponent },
+  { path: 'c4c/authoring-tool/:course', component: AuthoringToolComponent },
   { path: 'c4c/exercise/preview', component: ExercisePreviewComponent },
 
   // learner Routes

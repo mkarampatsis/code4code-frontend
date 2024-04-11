@@ -140,7 +140,6 @@ export class LearnerJavascriptEvaluationComponent {
                     console.log(err);
                 },
         });
-        //   this.router.navigate(['learner/learning-path', this.language]);
     }
   
     resetForm(){

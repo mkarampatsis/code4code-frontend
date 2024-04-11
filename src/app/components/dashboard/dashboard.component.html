@@ -1,6 +1,6 @@
-@if (user().category.includes("instructor")) {
+@if (authService.isInstructor()) {
     <app-instructor-dashboard></app-instructor-dashboard>
-} @else if (user().category.includes("learner")) {
+} @else if (authService.isLearner()) {
     <app-learner-dashboard></app-learner-dashboard>
 } @else {
     <app-administrator-dashboard></app-administrator-dashboard>
