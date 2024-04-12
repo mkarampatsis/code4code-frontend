@@ -19,8 +19,6 @@ import { python } from '@codemirror/lang-python';
 import { dracula } from '@uiw/codemirror-theme-dracula';
 import { indentationMarkers } from '@replit/codemirror-indentation-markers';
 
-// declare let loadPyodide: any;
-
 @Component({
   selector: 'app-python-editor',
   standalone: true,
@@ -38,8 +36,6 @@ import { indentationMarkers } from '@replit/codemirror-indentation-markers';
 export class PythonEditorComponent implements AfterViewInit, ControlValueAccessor, OnDestroy {
     @Input() codeType: string = 'javascript';
     @ViewChild('editor') editorDIV: ElementRef;
-    // @Input() code: string
-    // @ViewChild('code-editor') editorDIV: ElementRef;
     
     editor: EditorView;
     state: EditorState;
@@ -110,14 +106,4 @@ export class PythonEditorComponent implements AfterViewInit, ControlValueAccesso
     registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
-
-    // runCode(){
-    //     const code = this.editor.state.doc.toString()
-    //     console.log("CodeMirror", code)
-    //     let pyodide = loadPyodide() 
-    //     pyodide.runPythonAsync("1==2")
-    //         .then((result: any) => console.log("1>>", result));
-    //     pyodide.runPythonAsync(code)
-    //         .then((result: any) => console.log("2>>", result))
-    // }
 }
