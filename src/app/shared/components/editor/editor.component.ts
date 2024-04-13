@@ -6,6 +6,7 @@ import {
     Input,
     OnDestroy,
     ViewChild,
+    ViewEncapsulation,
     forwardRef,
     inject,
 } from '@angular/core';
@@ -32,6 +33,7 @@ import { indentationMarkers } from '@replit/codemirror-indentation-markers';
             multi: true,
         },
     ],
+    encapsulation: ViewEncapsulation.None,
 })
 export class EditorComponent
     implements AfterViewInit, ControlValueAccessor, OnDestroy

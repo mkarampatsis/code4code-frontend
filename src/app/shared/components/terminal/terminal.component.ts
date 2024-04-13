@@ -43,13 +43,14 @@ export class TerminalComponent {
     ngAfterViewInit() {
         this.underlying = this.terminal.underlying;
         this.underlying.loadAddon(new WebLinksAddon());
-        this.underlying.options.cursorStyle = 'bar';
+        this.underlying.options.cursorStyle = 'block';
         this.underlying.options.cursorBlink = true;
         this.underlying.options.fontSize = 18;
-        this.underlying.options.fontFamily =
-            '"Cascadia Code", Menlo, monospace';
+        this.underlying.options.fontFamily = 'monospace';
         this.underlying.options.theme = this.baseTheme;
-        this.terminal.write(this.prompt);
+        this.terminal.write(
+            'Welcome to the C4C Terminal! Press Enter to activate.',
+        );
         this.terminal.onData().subscribe((input) => {
             if (input === '\r') {
                 // Carriage Return (When Enter is pressed)

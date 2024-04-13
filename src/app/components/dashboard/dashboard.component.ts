@@ -8,11 +8,14 @@ import { ConstService } from 'src/app/shared/services/const.service';
 @Component({
     selector: 'app-dashboard',
     standalone: true,
-    imports: [LearnerDashboardComponent, InstructorDashboardComponent, AdministratorDashboardComponent],
+    imports: [
+        LearnerDashboardComponent,
+        InstructorDashboardComponent,
+        AdministratorDashboardComponent,
+    ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
 })
-
 export class DashboardComponent {
     authService = inject(AuthService);
     constService = inject(ConstService);
@@ -21,19 +24,19 @@ export class DashboardComponent {
     // categories = this.constService.PAY_CATEGORIES;
 }
 // export class DashboardComponent implements OnInit {
-    
-    // form = new FormGroup({
-    //     code: new FormControl('for x in range(1):\n  print(x)'),
-    //     // code: new FormControl(''),
-    // });
 
-    // ngOnInit(): void {
-    //     this.form.controls.code.valueChanges.subscribe((value) => {
-    //         console.log(value);
-    //     });
-    // }
+// form = new FormGroup({
+//     code: new FormControl('for x in range(1):\n  print(x)'),
+//     // code: new FormControl(''),
+// });
 
-    // submit(): void {
-    //     console.log(this.form.value);
-    // }
+// ngOnInit(): void {
+//     this.form.controls.code.valueChanges.subscribe((value) => {
+//         console.log(value);
+//     });
+// }
+
+// submit(): void {
+//     console.log(this.form.value);
+// }
 // }

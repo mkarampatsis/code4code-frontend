@@ -19,12 +19,7 @@ import { Editor, Toolbar, Validators, NgxEditorModule } from 'ngx-editor';
 export class ProseComponent implements OnInit, OnDestroy {
     editor: Editor;
     toolbar: Toolbar = [
-        ['bold', 'italic'],
-        ['underline', 'strike'],
-        ['code', 'blockquote'],
-        ['ordered_list', 'bullet_list'],
-        [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-        ['link', 'image'],
+        ['bold', 'italic', 'underline', 'strike', 'code'],
         ['text_color', 'background_color'],
         ['align_left', 'align_center', 'align_right', 'align_justify'],
     ];
