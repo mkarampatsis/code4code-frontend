@@ -12,10 +12,6 @@ import { SubmitButtonComponent } from 'src/app/shared/ui/submit-button/submit-bu
 
 import { capitalize } from 'lodash-es';
 import { Router } from '@angular/router';
-// import { IUser, TUserCategory } from 'src/app/shared/interfaces/user';
-// import { IProfileUpdateRequest } from 'src/app/shared/interfaces/profileUpdateRequest.interface';
-// import { take } from 'rxjs';
-// import { IProfileUpdateReply } from 'src/app/shared/interfaces/profileUpdateReply.interface';
 
 @Component({
   selector: 'app-landing-register',
@@ -46,7 +42,7 @@ export class LandingRegisterComponent {
       { value: this.name$, disabled: true },
       Validators.required,
     ),
-    category: new FormControl('', Validators.required),
+    // category: new FormControl('', Validators.required),
   });
 
   onImageError(event: any) {
@@ -58,20 +54,7 @@ export class LandingRegisterComponent {
   }
 
   onSubmit() {
-    this.router.navigate(['c4c/payform', this.form.value.category]);
-    // const { category } = this.form.value;
-    // const data = { category } as IProfileUpdateRequest;
-    // this.authService
-    //   .updateProfile(data)
-    //   .pipe(take(1))
-    //   .subscribe({
-    //     next: (res: IProfileUpdateReply) => {
-    //       this.authService.user.set(res.user);
-    //       this.authService.router.navigate(['c4c', 'dashboard']);
-    //     },
-    //     error: (err) => {
-    //       console.log(err);
-    //     },
-    //   });
+    // this.router.navigate(['c4c/enroll', this.form.value.category]);
+    this.router.navigateByUrl('c4c/enroll');
   }
 }

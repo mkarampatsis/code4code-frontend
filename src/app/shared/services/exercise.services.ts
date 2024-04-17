@@ -30,6 +30,12 @@ import { IUserAssessment } from 'src/app/shared/interfaces/user'
         return this.http.get<IUserLanguageEvaluation[]>(url);
     }
 
+    getNumberOfTrainingExercises(user:string, category:string, course:string):Observable<string> {
+        console.log(`${environment.apiURL}/exercises/training/count/${user}/${category}/${course}`)
+        const url = `${environment.apiURL}/exercises/training/count/${user}/${category}/${course}`;
+        return this.http.get<string>(url);
+    }
+
     postUserAssement(data: Object): Observable<IUserAssessment> {
         const url = `${environment.apiURL}/ml/user_assesment`;
         return this.http.post<IUserAssessment>(url, data);

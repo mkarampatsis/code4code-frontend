@@ -5,6 +5,7 @@ import {
     ExerciseDetailsLearnerComponent,
     ExerciseEvaluationComponent, 
     ExerciseDescriptionComponent,
+    ExerciseIntroTheoryComponent,
     BackendErrorComponent 
 } from 'src/app/shared/modals'
 import { IExercise } from 'src/app/shared/interfaces/exercises';
@@ -60,16 +61,35 @@ export class ModalService {
         modalRef.componentInstance.modalRef = modalRef;
     }
 
-    addExerciseDescription() {
+    addExerciseDescription(description:string) {
         const modalRef = this.modalService.open(ExerciseDescriptionComponent, {
             size: 'xl',
             centered: true,
         });
+        modalRef.componentInstance.description = description;
         modalRef.componentInstance.modalRef = modalRef;
         modalRef.result.then(
             result => { 
                 result = {
                     exercise_description: [result]
+                } 
+                this.exerciseService.exercise$.set({...this.exerciseService.exercise$(), ...result})
+            }
+        )
+    }
+
+    addExerciseIntroTheory(data: object) {
+        const modalRef = this.modalService.open(ExerciseIntroTheoryComponent, {
+            size: 'xl',
+            centered: true,
+        });
+        modalRef.componentInstance.data = data;
+        modalRef.componentInstance.modalRef = modalRef;
+        modalRef.result.then(
+            result => { 
+                result = {
+                    introduction: [result.introduction],
+                    subintroduction: [result.subintroduction]
                 } 
                 this.exerciseService.exercise$.set({...this.exerciseService.exercise$(), ...result})
             }

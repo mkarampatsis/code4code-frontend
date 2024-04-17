@@ -8,10 +8,12 @@ import { LandingAuthoringToolComponent } from './components/landing-authoring-to
 import { LandingLearningComponent } from './components/landing-learning/landing-learning.component';
 import { LandingPlansComponent } from './components/landing-plans/landing-plans.component';
 import { LandingRegisterComponent } from './components/landing-register/landing-register.component';
+import { LandingLoginComponent } from './components/landing-login/landing-login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { PayformComponent } from './components/payform/payform.component';
+import { EnrollComponent } from './components/enroll/enroll.component';
 
 // Instructor Imports
 import { AuthoringToolComponent } from './instructor/authoring-tool/authoring-tool.component';
@@ -38,9 +40,11 @@ export const routes: Routes = [
   { path: 'c4c/plans', component: LandingPlansComponent },
   { path: 'c4c/about', component:  AboutComponent},
   { path: 'c4c/contact', component:  ContactComponent},
+  { path: 'c4c/login', component: LandingLoginComponent },
   { path: 'c4c/register', component: LandingRegisterComponent, canActivate: [registerGuard], },
   { path: 'c4c/dashboard', component: DashboardComponent, canActivate: [loggedInGuard], },
-  { path: 'c4c/payform/:category', component: PayformComponent, canActivate: [loggedInGuard], },
+  { path: 'c4c/enroll', component: EnrollComponent, canActivate: [loggedInGuard], },
+  { path: 'c4c/payform', component: PayformComponent, canActivate: [loggedInGuard], },
   
   // Instructors Routes
   { path: 'c4c/instructor/dashboard', component: InstructorDashboardComponent },

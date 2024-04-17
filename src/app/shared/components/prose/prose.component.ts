@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, InjectionToken, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {
     AbstractControl,
     FormControl,
@@ -16,6 +16,8 @@ import { Editor, Toolbar, Validators, NgxEditorModule } from 'ngx-editor';
     styleUrl: './prose.component.css',
     encapsulation: ViewEncapsulation.None,
 })
+
+
 export class ProseComponent implements OnInit, OnDestroy {
     editor: Editor;
     toolbar: Toolbar = [
@@ -32,6 +34,10 @@ export class ProseComponent implements OnInit, OnDestroy {
 
     get doc(): AbstractControl {
         return this.form.get('editorContent');
+    }
+
+    setDescription(description: string) {
+        this.form.controls.editorContent.setValue(description);
     }
 
     ngOnInit(): void {

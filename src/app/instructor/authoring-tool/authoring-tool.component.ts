@@ -3,7 +3,6 @@ import { Component, effect, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup,FormArray,Validators, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
 import { TerminalComponent } from 'src/app/shared/components/terminal/terminal.component';
-import { ProseComponent } from 'src/app/shared/components/prose/prose.component';
 
 import { HintComponent } from 'src/app/shared/components/hint/hint.component';
 import { ExerciseService } from 'src/app/shared/services/exercise.services';
@@ -25,7 +24,6 @@ declare let loadPyodide: any;
         ReactiveFormsModule,
         EditorComponent,
         TerminalComponent,
-        ProseComponent,
         HintComponent,
   ],
   templateUrl: './authoring-tool.component.html',
@@ -42,7 +40,8 @@ export class AuthoringToolComponent implements OnInit {
     output: string = '';
     runOutput: string;;
 
-    course: string | undefined; 
+    course: string | undefined;
+    introTheory 
 
     form = new FormGroup({
         introduction: new FormControl('', Validators.required),
@@ -88,11 +87,14 @@ export class AuthoringToolComponent implements OnInit {
         })
         this.exercise = this.exerciseService.exercise$()
         this.addToOutput("Ready!<br>"); 
-
+        
         effect(() => {
             if (this.exerciseService.exercise$()){
                 this.exercise = this.exerciseService.exercise$()
             }
+
+            this.introTheory = true? this.exerciseService.exercise$().introduction.length>0 || this.exerciseService.exercise$().subintroduction.length>0 : false
+            console.log(this.introTheory) 
         });
     }
 
@@ -139,7 +141,15 @@ export class AuthoringToolComponent implements OnInit {
     }
 
     addDescription() {
-        this.modalService.addExerciseDescription();
+        this.modalService.addExerciseDescription(this.exerciseService.exercise$().exercise_description[0]);
+    }
+
+    addIntroTheory() {
+        const data = {
+            introduction: this.exerciseService.exercise$().introduction[0],
+            subintroduction: this.exerciseService.exercise$().subintroduction[0]
+        }
+        this.modalService.addExerciseIntroTheory(data);
     }
 
     async runCode(){

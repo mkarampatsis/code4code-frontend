@@ -63,19 +63,22 @@
             <div class="px-6 py-5">
                 <div class="grid items-center h-full gap-7">
                     <!-- Preview Code Window Footer -->
-                    <div class="flex flex-wrap items-center justify-start gap-3 lg:justify-end mx-auto">
+                    <div class="flex flex-wrap items-center justify-start gap-2 lg:justify-end mx-auto">
                         
                         <a (click)="nextExercise()" class="button button-outline">
                             Add Hint
                         </a>
                         <a (click)="addDescription()" class="button button-outline">
-                            Add Description
+                            <span *ngIf="exercise.exercise_description.length==0">Add Description</span>
+                            <span *ngIf="exercise.exercise_description.length>0">Update Description</span>
+                        </a>
+                        <a (click)="addIntroTheory()" class="button button-outline">
+                            <span *ngIf="!introTheory">Add Description</span>
+                            <span *ngIf="introTheory">Update Description</span>
+                            Add Introduction/Theory
                         </a>
                         <a href="" class="button button-outline">
-                            Add Theory
-                        </a>
-                        <a href="" class="button button-outline">
-                            Add Difficulty
+                            Add Difficulty/Code Output
                         </a>
                         <a href="" class="button button-outline">
                             Load Exercise
