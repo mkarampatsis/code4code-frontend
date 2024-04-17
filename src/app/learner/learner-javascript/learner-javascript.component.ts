@@ -1,12 +1,123 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+import { JavascriptEditorComponent } from 'src/app/shared/components/editor/javascript-editor/javascript.editor.component';
+import { TerminalComponent } from 'src/app/shared/components/terminal/terminal.component';
+import { ProseComponent } from 'src/app/shared/components/prose/prose.component';
+import { JavascriptTerminalComponent } from 'src/app/shared/components/terminal/javascript-terminal/javascript.terminal.component';
+import { HintComponent } from 'src/app/shared/components/hint/hint.component';
+import { ExerciseService } from 'src/app/shared/services/exercise.services';
+import { IExercise } from 'src/app/shared/interfaces/exercises';
+import { ModalService } from 'src/app/shared/services/modal.service';
+import { take } from 'rxjs';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-learner-javascript',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    JavascriptEditorComponent,
+    ProseComponent,
+    JavascriptTerminalComponent,
+    TerminalComponent,
+    HintComponent,
+  ],
   templateUrl: './learner-javascript.component.html',
   styleUrl: './learner-javascript.component.css'
 })
 export class LearnerJavascriptComponent {
+    modalService = inject(ModalService);
+    exerciseService = inject(ExerciseService)
+    authService = inject(AuthService);
+    
+    exercise: IExercise;
 
+    output: string = '';
+    runOutput: string;
+
+    localApi = {
+        testApiFn: function (message: string) {
+            console.log('Host function called from iframe with: ' + message);
+        }
+    };
+    
+    form = new FormGroup({
+        code: new FormControl(''),
+    });
+
+    
+    constructor(){
+        this.exerciseService
+        .getLearnerExercise('javascript')
+        .pipe(take(1))
+        .subscribe((data) => {
+            this.exercise = data[0]
+            this.form.controls['code'].setValue(this.exercise.code)
+        })
+        this.addToOutput("Ready!<br>"); 
+    }
+
+    ngOnInit(): void {
+    //     this.form.controls.code.valueChanges.subscribe((value) => {
+    //         console.log("XXX>>>",value);
+    //     });
+  
+   }
+
+    submit(): void {
+        const result = {
+            email: this.authService.user().email,
+            answer: this.form.controls.code.value,
+            output: this.runOutput,
+            exercise: this.exercise,
+            user: this.authService.user()
+        }
+        this.exerciseService.postUsersTraining(result)
+        .pipe(take(1))
+        .subscribe(() => {
+            this.nextExercise()
+        })
+    }
+
+    showExerciseDetails(): void {
+        this.modalService.showExerciseDetails(this.exercise);
+    }
+
+    runCode(){
+        let code = this.form.controls.code.value.toString();
+        
+        if (typeof Worker !== 'undefined') {
+            const worker = new Worker(new URL('../../shared/workers/javascript.worker', import.meta.url));
+            worker.onmessage = ({ data }) => {
+                console.log(`page got message: ${data.result}`);
+                if (data.status) {
+                    this.runOutput = data.result;
+                }
+                
+                this.addToOutput(data.result);
+            };
+            worker.postMessage(code);
+        } else {
+            console.log("Web workers are not supported in this environment.")
+        }
+    }
+  
+    nextExercise(){
+        this.exerciseService
+        .getLearnerExercise('javascript')
+        .pipe(take(1))
+        .subscribe((data) => {
+            this.exercise = data[0]
+            this.form.controls['code'].setValue(this.exercise.code)
+            this.output = ''
+            this.addToOutput("Ready!<br>"); 
+        })
+    }
+
+    addToOutput(msg: string) {
+        this.output += ">>> " + msg + "<br>";
+    }
 }

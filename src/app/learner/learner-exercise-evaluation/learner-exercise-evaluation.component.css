@@ -1,0 +1,9 @@
+table {
+    /* width: 100%;
+    table-layout: fixed; */
+    text-align: center;
+}
+
+.exercise_description  {
+    text-align: left;
+}

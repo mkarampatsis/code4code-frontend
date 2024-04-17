@@ -39,38 +39,13 @@ export class ExercisePreviewComponent {
 
     gridApi: GridApi<IExercise>;
 
-    // constructor(){
-    //     this.exerciseService.getExercises()
-    //         .subscribe( (result) => {
-    //             console.log(result);
-    //             this.exercises = result;
-    //         });
-    // }
-
-    // previewExercise(code:string){
-    //     console.log(code)
-    // }
-
     onGridReady(params: GridReadyEvent<IExercise>): void {
         this.gridApi = params.api;
         this.gridApi.showLoadingOverlay();
         this.exerciseService
-            .getExercises()
+            .getExercises("python")
             .pipe(
                 take(1),
-                // map((data) => {
-                //     return data.map((org) => {
-                //         return {
-                //             ...org,
-                //             organizationType: this.organizationTypesMap.get(
-                //                 parseInt(String(org.organizationType)),
-                //             ),
-                //             subOrganizationOf: this.organizationCodesMap.get(
-                //                 org.subOrganizationOf,
-                //             ),
-                //         };
-                //     });
-                // }),
             )
             .subscribe((data) => {
                 this.gridApi.hideOverlay();

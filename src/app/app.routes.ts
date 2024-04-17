@@ -24,6 +24,8 @@ import { LearnerPythonComponent } from './learner/learner-python/learner-python.
 import { LearnerPythonEvaluationComponent } from './learner/learner-python-evaluation/learner-python-evaluation.component';
 import { LearnerJavascriptComponent } from './learner/learner-javascript/learner-javascript.component';
 import { LearnerJavascriptEvaluationComponent } from './learner/learner-javascript-evaluation/learner-javascript-evaluation.component';
+import { LearnerProgressComponent } from './learner/learner-progress/learner-progress.component';
+import { LearnerExerciseEvaluationComponent } from './learner/learner-exercise-evaluation/learner-exercise-evaluation.component';
 
 //Administrator Imports
 import { AdministratorDashboardComponent } from './administrator/administrator-dashboard/administrator-dashboard.component';
@@ -51,6 +53,8 @@ export const routes: Routes = [
   { path: 'c4c/learner/python', component: LearnerPythonComponent },
   { path: 'c4c/learner/javascript/evalution', component: LearnerJavascriptEvaluationComponent },
   { path: 'c4c/learner/javascript', component: LearnerJavascriptComponent },
+  { path: 'c4c/learner/progress', component: LearnerProgressComponent },
+  { path: 'c4c/learner/exercise/evaluation', component: LearnerExerciseEvaluationComponent },
  
   // Administrator Routes
   { path: 'c4c/administrator/dashboard', component: AdministratorDashboardComponent },

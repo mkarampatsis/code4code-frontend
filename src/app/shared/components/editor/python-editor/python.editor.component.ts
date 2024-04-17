@@ -20,18 +20,18 @@ import { dracula } from '@uiw/codemirror-theme-dracula';
 import { indentationMarkers } from '@replit/codemirror-indentation-markers';
 
 @Component({
-  selector: 'app-python-editor',
-  standalone: true,
-  imports: [],
-  templateUrl: './python.editor.component.html',
-  styleUrl: './python.editor.component.css',
-  providers: [
-    {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => PythonEditorComponent),
-        multi: true,
-    },
-],
+    selector: 'app-python-editor',
+    standalone: true,
+    imports: [],
+    templateUrl: './python.editor.component.html',
+    styleUrl: './python.editor.component.css',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => PythonEditorComponent),
+            multi: true,
+        },
+    ],
 })
 export class PythonEditorComponent implements AfterViewInit, ControlValueAccessor, OnDestroy {
     @Input() codeType: string = 'javascript';

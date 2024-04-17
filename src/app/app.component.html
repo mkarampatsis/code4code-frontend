@@ -1,4 +1,4 @@
-@if (user() && user().isEnabled) {
+@if (user() && user().isEnabled && !routesWithouLoggedIn.includes(uri) ) {
   <app-user-navigation></app-user-navigation>
 } @else {
   <app-landing-navigation></app-landing-navigation>

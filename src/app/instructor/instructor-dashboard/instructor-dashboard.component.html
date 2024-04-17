@@ -15,49 +15,67 @@
       <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
         
         <div class="flex flex-col gap-16 px-3 py-5 text-center transition border border-white border-solid rounded-xl hover:border-custom-green group">
-          <div>
-            <p class="mb-1">&nbsp;</p>
-            <h5 class="transition group-hover:text-custom-green">Authoring Tool</h5>
-          </div>
-          <div class="flex-1 px-10">
-            <p>Create your exercises with Authoring Tool.</p> 
-            <p>AI module will categorize your exercise</p>
-            <a routerLink="/c4c/authoring-tool" class="mb-10 button button-primary button-full-width mt-9">
-              Go to Authoring Tool
-              <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8.40381 15.5987L7.06787 14.2862L12.3179 9.03619H0.903809V7.16119H12.3179L7.06787 1.91119L8.40381 0.598694L15.9038 8.09869L8.40381 15.5987Z" />
-              </svg>
-            </a>
-          </div>
+            <div>
+                <p class="mb-1">&nbsp;</p>
+                <h5 class="transition group-hover:text-custom-green">Authoring Tool</h5>
+            </div>
+            <div class="flex-1 px-10">
+                <p>Create your Python exercises with Authoring Tool.</p> 
+                <p>AI module will categorize your exercise</p> 
+                @if (authService.isCourseInstructor('python')){
+                    <a (click)="goToAuthoringTool('python')" class="mb-10 button button-primary button-full-width mt-9">
+                        Go to Python Authoring Tool
+                        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.40381 15.5987L7.06787 14.2862L12.3179 9.03619H0.903809V7.16119H12.3179L7.06787 1.91119L8.40381 0.598694L15.9038 8.09869L8.40381 15.5987Z" />
+                        </svg>
+                    </a>
+                } @else {
+                    <a (click)="enrollToAuthoringTool()" class="mb-10 button button-primary button-full-width mt-9">
+                        Enroll to Python Authoring Tool
+                        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.40381 15.5987L7.06787 14.2862L12.3179 9.03619H0.903809V7.16119H12.3179L7.06787 1.91119L8.40381 0.598694L15.9038 8.09869L8.40381 15.5987Z" />
+                        </svg>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-16 px-3 py-5 text-center transition border border-white border-solid rounded-xl hover:border-custom-green group">
+            <div>
+                <p class="mb-1">&nbsp;</p>
+                <h5 class="transition group-hover:text-custom-green">Authoring Tool</h5>
+            </div>
+            <div class="flex-1 px-10">
+                <p>Create your JavaScript exercises with Authoring Tool.</p> 
+                <p>AI module will categorize your exercise</p>
+                @if (authService.isCourseInstructor('javascript')){
+                    <a (click)="goToAuthoringTool('javascript')" class="mb-10 button button-primary button-full-width mt-9">
+                        Go to JavaScript Authoring Tool
+                        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.40381 15.5987L7.06787 14.2862L12.3179 9.03619H0.903809V7.16119H12.3179L7.06787 1.91119L8.40381 0.598694L15.9038 8.09869L8.40381 15.5987Z" />
+                        </svg>
+                    </a>
+                } @else {
+                    <a (click)="enrollToAuthoringTool()" class="mb-10 button button-primary button-full-width mt-9">
+                        Enroll to JavaScript Authoring Tool
+                        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.40381 15.5987L7.06787 14.2862L12.3179 9.03619H0.903809V7.16119H12.3179L7.06787 1.91119L8.40381 0.598694L15.9038 8.09869L8.40381 15.5987Z" />
+                        </svg>
+                    </a>
+                }
+            </div>
         </div>
 
         <div class="flex flex-col gap-16 px-3 py-5 text-center transition border border-white border-solid rounded-xl hover:border-custom-green group">
           <div>
             <p class="mb-1">&nbsp;</p>
-            <h5 class="transition group-hover:text-custom-green">Exercise Preview</h5>
+            <h5 class="transition group-hover:text-custom-green">Exercise Preview and Evaluation</h5>
           </div>
           <div class="flex-1 px-10">
-            <p>You can preview all exercises.</p> 
+            <p>You can preview and evaluate all exercises.</p> 
             <p>Run the code and test exercises</p>
             <a routerLink="/c4c/exercise/preview" class="mb-10 button button-primary button-full-width mt-9">
               Go to Exercise Preview
-              <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8.40381 15.5987L7.06787 14.2862L12.3179 9.03619H0.903809V7.16119H12.3179L7.06787 1.91119L8.40381 0.598694L15.9038 8.09869L8.40381 15.5987Z" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="flex flex-col gap-16 px-3 py-5 text-center transition border border-white border-solid rounded-xl hover:border-custom-green group">
-          <div>
-            <p class="mb-1">&nbsp;</p>
-            <h5 class="transition group-hover:text-custom-green">Evaluation</h5>
-          </div>
-          <div class="flex-1 px-10">
-            <p>Evaluate exercises.</p> 
-            <p>Check exercises and evaluate them</p>
-            <a href="" class="mb-10 button button-primary button-full-width mt-9">
-              Go to Exercise Evaluation
               <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8.40381 15.5987L7.06787 14.2862L12.3179 9.03619H0.903809V7.16119H12.3179L7.06787 1.91119L8.40381 0.598694L15.9038 8.09869L8.40381 15.5987Z" />
               </svg>

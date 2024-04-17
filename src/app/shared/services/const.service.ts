@@ -25,6 +25,8 @@ export class ConstService {
         filter: true,
         sortable: true,
         floatingFilter: true,
+        // wrapText: true,
+        // autoHeight: true,
     };
     autoSizeStrategy:
         | SizeColumnsToFitGridStrategy

@@ -10,6 +10,7 @@ import { ExerciseService } from 'src/app/shared/services/exercise.services';
 import { IExercise } from 'src/app/shared/interfaces/exercises';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { take } from 'rxjs';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 declare let loadPyodide: any;
 
@@ -31,10 +32,12 @@ declare let loadPyodide: any;
 export class LearnerPythonComponent {
     modalService = inject(ModalService);
     exerciseService = inject(ExerciseService)
+    authService = inject(AuthService);
     
     exercise: IExercise;
 
-    output: string
+    output: string = '';
+    runOutput: string;
     
     form = new FormGroup({
         code: new FormControl(''),
@@ -49,6 +52,7 @@ export class LearnerPythonComponent {
             this.exercise = data[0]
             this.form.controls['code'].setValue(this.exercise.code)
         })
+        this.addToOutput("Ready!<br>"); 
     }
 
     // ngOnInit(): void {
@@ -58,22 +62,43 @@ export class LearnerPythonComponent {
     // }
 
     submit(): void {
-        console.log(this.form.value);
+        const result = {
+            email: this.authService.user().email,
+            answer: this.form.controls.code.value,
+            output: this.runOutput,
+            exercise: this.exercise,
+            user: this.authService.user()
+        }
+        this.exerciseService.postUsersTraining(result)
+        .pipe(take(1))
+        .subscribe(() => {
+            this.nextExercise()
+        })
     }
 
     showExerciseDetails(): void {
-        // console.log(this.params.data.exercise, this.params.data._id);
-        this.modalService.showExerciseDetails(this.exercise.exercise);
+        this.modalService.showExerciseDetails(this.exercise);
     }
 
     async runCode(){
         let pyodide = await loadPyodide() 
         let code = this.form.controls.code.value.toString();
-        pyodide.setStdout({ batched: (msg: string) => {
-                this.output = msg; 
+        
+        try {
+            pyodide.setStdout({ batched: (msg: string) => {
+                this.addToOutput(msg); 
+                this.runOutput = msg;
+                console.log(msg)
             }
-        });
-        pyodide.runPythonAsync(code)
+            });
+            try {
+                pyodide.runPython(code)
+            } catch(err) {
+                this.addToOutput(err); 
+            }
+        }  catch (err) {
+        this.addToOutput(err);
+      }
     }
   
     nextExercise(){
@@ -83,6 +108,12 @@ export class LearnerPythonComponent {
         .subscribe((data) => {
             this.exercise = data[0]
             this.form.controls['code'].setValue(this.exercise.code)
+            this.output = ''
+            this.addToOutput("Ready!<br>"); 
         })
+    }
+
+    addToOutput(msg: string) {
+        this.output += ">>> " + msg + "<br>";
     }
 }

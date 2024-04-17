@@ -852,9 +852,17 @@ body {
   max-height: 682px;
 }
 
+.max-h-half {
+    max-height: 49%;
+}
+
 .max-h-min {
   max-height: -moz-min-content;
   max-height: min-content;
+}
+
+.max-h-full {
+    max-height: 100%;
 }
 
 .max-h-windows-height {
@@ -867,6 +875,10 @@ body {
 
 .min-h-\[600px\] {
   min-height: 600px;
+}
+
+.min-h-half {
+    min-height: 49%;
 }
 
 .min-h-full {

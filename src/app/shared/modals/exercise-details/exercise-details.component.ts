@@ -1,4 +1,4 @@
-import { Component, inject, } from '@angular/core';
+import { Component, inject, ViewEncapsulation} from '@angular/core';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ExerciseService } from 'src/app/shared/services/exercise.services';
 import { IExercise } from 'src/app/shared/interfaces/exercises' 
@@ -13,30 +13,24 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   standalone: true,
   imports: [CommonModule, NgbModalModule, CardRowRightLeftComponent],
   templateUrl: './exercise-details.component.html',
-  styleUrl: './exercise-details.component.css'
+  styleUrl: './exercise-details.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class ExerciseDetailsComponent {
     authService = inject(AuthService);
     exerciseService = inject(ExerciseService);
    
-    exerciseID: string | null = null;
     exercise: IExercise | null = null;
     user: IUser | null = null;
     
     modalRef: any;
     
     ngOnInit() {
-        this.exerciseService
-            .getExercise(this.exerciseID)
-            .pipe(take(1))
-            .subscribe((data) => {
-                this.exercise = data;
-            });
-        
+        if (this.exercise.output.length>0) {
+            this.exercise.output = [this.exercise?.output[0].replace('type=oneline\n', '').trim()]
+        } else {
+            this.exercise.output = []
+        }
         this.user = this.authService.user()
     }
-
-    // checkCategory(category: string){
-    //     this.user.category.find((element)=>element===category)
-    // }
 }

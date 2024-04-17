@@ -23,7 +23,7 @@ export class HintComponent {
     }
 
     toggleAccordion(hintId: string){
-
+        // console.log(hintId);
         const element = this.document.querySelector("#"+ hintId);
         const itemToggle = element.getAttribute('aria-expanded');
         const nextElement = element.nextElementSibling;
