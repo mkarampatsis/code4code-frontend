@@ -69,9 +69,7 @@ export class AuthService {
 
     updateProfile(req: IProfileUpdateRequest) {
         return this.http.patch<{ user: IUser; msg: string }>(
-            `${environment.apiURL}/auth/profile`,
-            req,
-        );
+            `${environment.apiURL}/auth/profile`, req);
     }
 
     isCourseLearner(course:string) {
@@ -117,4 +115,13 @@ export class AuthService {
         
         return result.length > 0;
     }
+
+    isLearnerOrInstructorOrNothing() {
+        if (this.isLearner() || this.isInstructor()) {
+            this.router.navigate(['c4c', 'dashboard']);
+        } else {
+            this.router.navigate(['c4c', 'enroll']);
+        }
+    }
+
 }

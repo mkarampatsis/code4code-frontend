@@ -25,20 +25,20 @@
                 ></app-card-row-right-left>
                 <app-card-row-right-left
                     [keyValue]="{
-                        key: 'Code',
-                        value: exercise?.code
-                    }"
-                ></app-card-row-right-left>
-                <app-card-row-right-left
-                    [keyValue]="{
-                        key: 'Output',
-                        value: exercise?.output[0].replace('type=oneline\n', '').trim()
-                    }"
-                ></app-card-row-right-left>
-                <app-card-row-right-left
-                    [keyValue]="{
                         key: 'Chapter',
                         value: exercise?.category.chapter
+                    }"
+                ></app-card-row-right-left>
+                <app-card-row-right-left
+                    [keyValue]="{
+                        key: 'Introduction for exercise',
+                        value: exercise?.introduction
+                    }"
+                ></app-card-row-right-left>
+                <app-card-row-right-left
+                    [keyValue]="{
+                        key: 'Theory and Examples',
+                        value: exercise?.subintroduction
                     }"
                 ></app-card-row-right-left>
             </div>

@@ -62,20 +62,20 @@ export class PayformComponent implements OnInit {
     }
 
     onSubmit() {
-        const { category } = this.form.value;
-        const data = { category } as IProfileUpdateRequest;
-        this.authService
-            .updateProfile(data)
-            .pipe(take(1))
-            .subscribe({
-                next: (res: IProfileUpdateReply) => {
-                    this.authService.user.set(res.user);
-                    this.router.navigate(['c4c', 'dashboard']);
-                },
-                error: (err) => {
-                    console.log(err);
-                },
-            });
+        // const { category } = this.form.value;
+        // const data = { category } as IProfileUpdateRequest;
+        // this.authService
+        //     .updateProfile(data)
+        //     .pipe(take(1))
+        //     .subscribe({
+        //         next: (res: IProfileUpdateReply) => {
+        //             this.authService.user.set(res.user);
+        //             this.router.navigate(['c4c', 'dashboard']);
+        //         },
+        //         error: (err) => {
+        //             console.log(err);
+        //         },
+        //     });
     }
     
 }

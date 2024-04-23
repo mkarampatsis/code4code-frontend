@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup,FormArray,Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, effect, inject, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
 import { TerminalComponent } from 'src/app/shared/components/terminal/terminal.component';
 
@@ -13,6 +13,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import 'short-uuid'
 import shortUUID from 'short-uuid';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { Toast, ToastService } from 'src/app/shared/services/toast.service';
+import { ToastMessageComponent } from 'src/app/shared/components/toast-message/toast-message.component';
 
 declare let loadPyodide: any;
 
@@ -25,40 +28,38 @@ declare let loadPyodide: any;
         EditorComponent,
         TerminalComponent,
         HintComponent,
+        NgbNavModule
   ],
   templateUrl: './authoring-tool.component.html',
-  styleUrl: './authoring-tool.component.css'
+  styleUrl: './authoring-tool.component.css',
 })
-export class AuthoringToolComponent implements OnInit {
+export class AuthoringToolComponent {
+    
+    @ViewChild('successTpl') successTpl: TemplateRef<any>;
+    
     modalService = inject(ModalService);
     exerciseService = inject(ExerciseService)
     authService = inject(AuthService);
+    toastService = inject(ToastService);
     route = inject(ActivatedRoute);
 
     exercise: IExercise;
 
     output: string = '';
-    runOutput: string;;
 
     course: string | undefined;
-    introTheory 
+    introduction: boolean = false;
+    theory: boolean = false;
+    hint: boolean = false
+    description: boolean = false;
+    difficulty: boolean = false;
+    code: boolean = false;
+
+    checkData: boolean = true;
+    isNewExercise: boolean = true;
 
     form = new FormGroup({
-        introduction: new FormControl('', Validators.required),
-        subintroduction: new FormControl(''),
-        exercise_description: new FormControl('', Validators.required),
-        category: new FormGroup({
-            chapter: new FormControl(''),
-            subchapter: new FormArray([])
-        }),
-        hints: new FormArray([]),
-        author: new FormGroup({
-            name: new FormControl(''),
-            email: new FormControl('')
-        }),
-        course: new FormControl(''),
         code: new FormControl(''),
-        output: new FormArray([])
     });
 
 
@@ -93,47 +94,41 @@ export class AuthoringToolComponent implements OnInit {
                 this.exercise = this.exerciseService.exercise$()
             }
 
-            this.introTheory = true? this.exerciseService.exercise$().introduction.length>0 || this.exerciseService.exercise$().subintroduction.length>0 : false
-            console.log(this.introTheory) 
+            this.introduction = true? this.exerciseService.exercise$().introduction.length>0: false;
+            this.theory = true? this.exerciseService.exercise$().subintroduction.length>0 : false;
+            this.hint = true? this.exerciseService.exercise$().hints.length>0 : false;
+            this.description = true? this.exerciseService.exercise$().exercise_description.length>0 : false;
+            this.difficulty = true? this.exerciseService.exercise$().difficulty.trim().length != 0: false;
+            this.code = true? this.exerciseService.exercise$().code.trim().length!=0 && this.exerciseService.exercise$().output.length>0: false;
+
+            
+            if (this.description && this.difficulty && this.code) {
+                this.checkData = false
+            } else {
+                this.checkData = true
+            }
+
+            if (this.code) {
+                this.form.controls['code'].setValue(this.exerciseService.exercise$().code);
+                console.log("Code", this.code);
+            }
+            // this.checkData = false? this.description && this.difficulty && this.code: true;
         });
     }
 
-    ngOnInit(): void {
-        this.form.controls['course'].setValue(this.course);
-    }
-
-    addHint() {
-        const hintForm =  new FormGroup({
-            text: new FormControl(''),
-            code: new FormControl(''),
-            penalty: new FormControl('')          
-         })
-
-        this.form.controls['hints'].push(hintForm)
-    }
-
-    deleteHint(hintIndex: number) {
-        this.form.controls['hints'].removeAt(hintIndex);
-    }
-
     onSubmit() {
-        console.log(this.form.value)
-    }
+        if (!this.checkData && this.isNewExercise ){
+            this.modalService.showSubmitDetails(this.exerciseService.exercise$())
 
-    submit(): void {
-        console.log(this.exerciseService.exercise$)
-        // const result = {
-        //     email: this.authService.user().email,
-        //     answer: this.form.controls.code.value,
-        //     output: this.runOutput,
-        //     exercise: this.exercise,
-        //     user: this.authService.user()
-        // }
-        // this.exerciseService.postUsersTraining(result)
-        // .pipe(take(1))
-        // .subscribe(() => {
-        //     this.nextExercise()
-        // })
+            // this.exerciseService.postUsersExercise(this.exerciseService.exercise$())
+            // .subscribe((result)=>{
+            //     console.log(result);
+            //     // this.showSuccess(this.successTpl);
+            // })
+        } else {
+            this.modalService.showSubmitDetails(this.exerciseService.exercise$())
+            console.log("Modified")
+        }
     }
 
     showExerciseDetails() {
@@ -144,12 +139,20 @@ export class AuthoringToolComponent implements OnInit {
         this.modalService.addExerciseDescription(this.exerciseService.exercise$().exercise_description[0]);
     }
 
-    addIntroTheory() {
-        const data = {
-            introduction: this.exerciseService.exercise$().introduction[0],
-            subintroduction: this.exerciseService.exercise$().subintroduction[0]
-        }
-        this.modalService.addExerciseIntroTheory(data);
+    addIntroduction() {
+        this.modalService.addExerciseIntroduction(this.exerciseService.exercise$().introduction[0]);
+    }
+
+    addTheory() {
+        this.modalService.addExerciseTheory(this.exerciseService.exercise$().subintroduction[0]);
+    }
+
+    addDifficulty() {
+        this.modalService.addExerciseDifficulty(this.exerciseService.exercise$().difficulty);
+    }
+
+    addHint() {
+        this.modalService.addExerciseHints(this.exerciseService.exercise$().hints);
     }
 
     async runCode(){
@@ -159,9 +162,13 @@ export class AuthoringToolComponent implements OnInit {
             if (typeof Worker !== 'undefined') {
                 const worker = new Worker(new URL('../../shared/workers/javascript.worker', import.meta.url));
                 worker.onmessage = ({ data }) => {
-                    console.log(`page got message: ${data.result}`);
                     if (data.status) {
-                        this.runOutput = data.result;
+                        // set result to exircise$
+                        const result = {
+                            code: code,
+                            output: data.result
+                        } 
+                        this.exerciseService.exercise$.set({...this.exerciseService.exercise$(), ...result})
                     }
                     
                     this.addToOutput(data.result);
@@ -176,8 +183,12 @@ export class AuthoringToolComponent implements OnInit {
             try {
                 pyodide.setStdout({ batched: (msg: string) => {
                     this.addToOutput(msg); 
-                    this.runOutput = msg;
-                    console.log(msg)
+                    // set result to exircise$
+                    const result = {
+                        code: code,
+                        output: [msg]
+                    } 
+                    this.exerciseService.exercise$.set({...this.exerciseService.exercise$(), ...result})
                 }
                 });
                 try {
@@ -193,7 +204,7 @@ export class AuthoringToolComponent implements OnInit {
   
     nextExercise(){
         this.exerciseService
-        .getLearnerExercise('python')
+        .getLearnerExercise('python', this.authService.user().email)
         .pipe(take(1))
         .subscribe((data) => {
             this.exercise = data[0]
@@ -203,7 +214,22 @@ export class AuthoringToolComponent implements OnInit {
         })
     }
 
+    loadExercises(){
+        this.modalService.loadExercisesByUserAndCourse('python')
+    }
+
     addToOutput(msg: string) {
         this.output += ">>> " + msg + "<br>";
+    }
+
+    showSuccess(template: TemplateRef<any>) {
+        const toast: Toast = {
+            component: ToastMessageComponent,
+            inputs: {
+                message: `Επιτυχής εισαγωγή νέας Νομικής Πράξης <strong>${this.exerciseService.exercise$().exercise}</strong>.`,
+            },
+            classname: 'bg-success text-light',
+        };
+        this.toastService.show(toast);
     }
 }

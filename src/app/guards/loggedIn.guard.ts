@@ -12,8 +12,8 @@ export const loggedInGuard: CanActivateFn = (route, state) => {
         const access_token = localStorage.getItem('accessToken');
         const isTokenExpired = jwtHelper.isTokenExpired(access_token);
         if (isTokenExpired) {
-        authService.signOut();
-        router.navigateByUrl('c4c/login');
+            authService.signOut();
+            router.navigateByUrl('c4c/login');
         }
     } else {
             router.navigateByUrl('c4c/login');

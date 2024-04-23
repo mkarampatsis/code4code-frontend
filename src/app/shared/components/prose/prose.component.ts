@@ -36,8 +36,8 @@ export class ProseComponent implements OnInit, OnDestroy {
         return this.form.get('editorContent');
     }
 
-    setDescription(description: string) {
-        this.form.controls.editorContent.setValue(description);
+    setEditorContent(data: string) {
+        this.form.controls.editorContent.setValue(data);
     }
 
     ngOnInit(): void {

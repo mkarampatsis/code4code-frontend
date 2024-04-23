@@ -23,7 +23,7 @@ export class HintComponent {
     }
 
     toggleAccordion(hintId: string){
-        // console.log(hintId);
+       
         const element = this.document.querySelector("#"+ hintId);
         const itemToggle = element.getAttribute('aria-expanded');
         const nextElement = element.nextElementSibling;
@@ -46,6 +46,15 @@ export class HintComponent {
             icon.classList.add('after:opacity-0', 'before:bg-custom-gray-800', 'after:bg-custom-gray-800')
             nextElement.classList.add('opacity-100', 'max-h-min', 'py-6')
             nextElement.classList.remove('opacity-0', 'max-h-0', 'py-0')
+        }
+
+        if (itemToggle == 'true') {
+            element.setAttribute('aria-expanded', 'false');
+            element.classList.remove('border-b-0', 'rounded-b-none', 'bg-custom-green')
+            title.classList.remove('!text-custom-gray-800')
+            icon.classList.remove('after:opacity-0', 'before:bg-custom-gray-800', 'after:bg-custom-gray-800')
+            nextElement.classList.remove('opacity-100', 'max-h-min', 'py-6')
+            nextElement.classList.add('opacity-0', 'max-h-0', 'py-0')
         }
     }
     }

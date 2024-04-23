@@ -25,10 +25,10 @@ export class ActionIconsLearnerComponent {
     }
 
     showExerciseDetailLearner(): void {
-        this.modalService.showExerciseDetailLearner(this.params.data.exercise.exercise);
+        this.modalService.showExerciseDetailLearner(this.params.data.exercise);
     }
 
     createEvaluation(): void {
-        this.modalService.createEvaluation(this.params.data.exercise);
+        this.modalService.showExerciseRateLearner(this.params.data.exercise);
     }
 }

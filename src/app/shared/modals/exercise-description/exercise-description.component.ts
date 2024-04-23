@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule} from '@angular/common';
 import { ProseComponent } from '../../components/prose/prose.component';
@@ -19,12 +19,10 @@ export class ExerciseDescriptionComponent implements AfterViewInit{
     modalRef: any;
 
     ngAfterViewInit() {
-        console.log(">>",this.description)
-        this.proseComponent.setDescription(this.description)
+        this.proseComponent.setEditorContent(this.description)
     }
 
     submit(){
-        console.log(this.proseComponent.doc.value)
         this.modalRef.close(this.proseComponent.doc.value);
     }
 }

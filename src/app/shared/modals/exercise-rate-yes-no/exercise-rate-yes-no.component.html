@@ -1,6 +1,6 @@
 <main class="bg-custom-gray-900 mat-typography">
     <div class="d-flex justify-content-between m-3">
-        <span class="h5">Please evaluate the dificulty of each exercise</span>
+        <span class="h5">Please rate the dificulty of each exercise</span>
         <button
             type="button"
             class="btn-close button button-primary "
@@ -32,23 +32,36 @@
                 <app-card-row-right-left
                     [keyValue]="{
                         key: 'Output',
-                        value: exercise?.exercise.output
+                        value: exercise?.exercise.output[0].replace('type=oneline\n', '').trim()
                     }"
                 ></app-card-row-right-left>
                 <app-card-row-right-left
                     [keyValue]="{
-                        key: 'Output',
+                        key: 'Chapter',
                         value: exercise?.exercise.category.chapter
                     }" 
                 ></app-card-row-right-left>
             </div>
 
             <div style="width: 50%;margin-left: auto;margin-right: auto;">
-                <label style="color: white;" for="evalution">Evaluate exercise ({{ evaluation.value }})</label>
-                <input type="range" #evaluation (input)="evaluation.value" id="evaluation" min="0" max="5">
-            
+                <!-- <label style="color: white;" for="rate">Rate exercise ({{ rate.value }})</label>
+                <input type="range" #rate (input)="rate.value" id="rate" min="0" max="5"> -->
+                <label>Did You Find This Exercise Helpfull</label>
+                <div class="radio-group">
+                    <form [formGroup]="form">
+                        <div class="radio-container">
+                            <input type="radio" id="rate_yes" value="yes" formControlName="rate">
+                            <label for="rate_yes">Yes</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="rate_no" value="no" formControlName="rate">
+                            <label for="rate_no">No</label>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="flex flex-wrap items-center justify-between gap-3">
-                    <button (click)="submitEval(exercise._id, evaluation.value)" class="button button-primary">
+                    <button (click)="submitRate()" class="button button-primary">
                     Submit
                     <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.40381 15.5987L7.06787 14.2862L12.3179 9.03619H0.903809V7.16119H12.3179L7.06787 1.91119L8.40381 0.598694L15.9038 8.09869L8.40381 15.5987Z" />
@@ -71,5 +84,6 @@
         </button>
     </div>
 </main>
+
 
 

@@ -1,3 +1,6 @@
+import {TUserCategory, TUserCourse, TUserLevel} from "./user"
+import { IUser } from "./user";
+
 export interface IExercise {
     introduction: string[]
     subintroduction: string[]
@@ -32,4 +35,16 @@ export interface IAuthor {
     name: string
     email: string
 }
-  
+
+export interface IUserTraining {
+    _id: string,
+    email:string,
+    category: TUserCategory,
+    course: TUserCourse,
+    level: TUserLevel,
+    answer: string,
+    output: string,
+    exercise: IExercise,
+    user: IUser,
+    rate: string
+}

@@ -4,7 +4,7 @@
         <div class="container">
           <div class="max-w-[800px] mx-auto self-center w-full">
             <div class="mb-10 text-center">
-              <h3>Evaluate the dificulty of each exercise</h3>
+              <h3>Rate the dificulty of each exercise</h3>
             </div>
           </div>
         </div>
@@ -19,7 +19,7 @@
                             <tr>
                                 <th width="50%">Description</th>
                                 <th>Level of difficulty</th>
-                                <th>Evaluation</th>
+                                <th>Rating</th>
                                 <th>Actions</th>
                             </tr>                 
                         </thead>
@@ -36,12 +36,12 @@
                               {{exercise.exercise.difficulty}}
                             </td>
                             <td class="px-4 pt-4 pb-6 whitespace-nowrap">
-                                {{exercise.evaluation}}
-                              </td>
+                                {{exercise.rate}}
+                            </td>
                             <td class="px-4 pt-4 pb-6 whitespace-nowrap">
-                              <a (click)="evalModal(exercise)" class="button button-primary">
-                                <span *ngIf="!exercise.evaluation">Evaluate</span>
-                                <span *ngIf="exercise.evaluation">Update</span>
+                                <a (click)="rateModal(exercise)" class="button button-primary">
+                                <span *ngIf="!exercise.rate">Rate</span>
+                                <span *ngIf="exercise.rate">Update</span>
                                 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.40381 15.5987L7.06787 14.2862L12.3179 9.03619H0.903809V7.16119H12.3179L7.06787 1.91119L8.40381 0.598694L15.9038 8.09869L8.40381 15.5987Z" />
                                 </svg>

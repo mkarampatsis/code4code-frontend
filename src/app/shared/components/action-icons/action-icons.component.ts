@@ -27,23 +27,11 @@ export class ActionIconsComponent implements ICellRendererAngularComp {
     }
 
     showExerciseDetails(): void {
-        // console.log(this.params.data.exercise, this.params.data._id);
-        this.modalService.showExerciseDetails(this.params.data.exercise);
+        this.modalService.showExerciseDetails(this.params.data);
     }
 
-    // showOrganizationTree(): void {
-    //     this.modalService.showOrganizationTree(this.params.data.exercise);
-    // }
-
-    // showUpload(): void {
-    //     this.modalService.uploadFile();
-    // }
-
-    createEvaluation(): void {
-        this.modalService.createEvaluation(this.params.data.exercise);
+    instructorRateForm(): void {
+        this.modalService.showExerciseRateInstructor(this.params.data);
     }
 
-    // canEdit(code: string): boolean {
-    //     return this.authService.canEdit(code);
-    // }
 }

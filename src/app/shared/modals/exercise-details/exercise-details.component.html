@@ -17,42 +17,54 @@
                 >
             </div>
             <div class="card-body">
-                <app-card-row-right-left
-                    [keyValue]="{
-                        key: 'Exercise Description',
-                        value: exercise?.exercise_description
-                    }"
-                ></app-card-row-right-left>
-                <app-card-row-right-left *ngIf="authService.isInstructor()"
-                    [keyValue]="{
-                        key: 'Code',
-                        value: exercise?.code
-                    }"
-                ></app-card-row-right-left>
-                <app-card-row-right-left *ngIf="authService.isInstructor()"
-                    [keyValue]="{
-                        key: 'Output',
-                        value: exercise?.output  
-                    }"
-                ></app-card-row-right-left>
-                <app-card-row-right-left *ngIf="authService.isLearner()"
-                    [keyValue]="{
-                        key: 'Chapter',
-                        value: exercise?.category.chapter
-                    }"
-                ></app-card-row-right-left>
-                <app-card-row-right-left *ngIf="authService.isLearner()"
-                    [keyValue]="{
-                        key: 'Introduction for exercise',
-                        value: exercise?.introduction
-                    }"
-                ></app-card-row-right-left>
-                <app-card-row-right-left *ngIf="authService.isLearner()"
-                    [keyValue]="{
-                        key: 'Theory for exercise',
-                        value: exercise?.subintroduction
-                    }"
-                ></app-card-row-right-left>
+                @if(exercise.exercise_description[0]) {
+                    <app-card-row-right-left
+                        [keyValue]="{
+                            key: 'Exercise Description',
+                            value: exercise?.exercise_description
+                        }"
+                    ></app-card-row-right-left>
+                }
+                @if(exercise.code) {
+                    <app-card-row-right-left
+                        [keyValue]="{
+                            key: 'Code',
+                            value: exercise?.code
+                        }"
+                    ></app-card-row-right-left>
+                }
+                @if(exercise.output[0]) {
+                    <app-card-row-right-left
+                        [keyValue]="{
+                            key: 'Output',
+                            value: exercise?.output[0].replace('type=oneline\n', '').trim()  
+                        }"
+                    ></app-card-row-right-left>
+                }
+                @if(exercise.category.chapter) {
+                    <app-card-row-right-left
+                        [keyValue]="{
+                            key: 'Chapter',
+                            value: exercise?.category.chapter
+                        }"
+                    ></app-card-row-right-left>
+                }
+                @if(exercise.introduction[0]) {
+                    <app-card-row-right-left
+                        [keyValue]="{
+                            key: 'Introduction for exercise',
+                            value: exercise?.introduction
+                        }"
+                    ></app-card-row-right-left>
+                }
+                @if(exercise.subintroduction[0]) {
+                    <app-card-row-right-left
+                        [keyValue]="{
+                            key: 'Theory and Examples',
+                            value: exercise?.subintroduction
+                        }"
+                    ></app-card-row-right-left>
+                }               
             </div>
         </div>
     </div>

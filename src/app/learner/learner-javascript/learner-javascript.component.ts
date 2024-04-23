@@ -51,30 +51,30 @@ export class LearnerJavascriptComponent {
     
     constructor(){
         this.exerciseService
-        .getLearnerExercise('javascript')
+        .getLearnerExercise('javascript', this.authService.user().email)
         .pipe(take(1))
         .subscribe((data) => {
-            this.exercise = data[0]
+            this.exercise = data
             this.form.controls['code'].setValue(this.exercise.code)
+            this.output = ''
+            this.addToOutput("Ready!<br>"); 
         })
-        this.addToOutput("Ready!<br>"); 
     }
-
-    ngOnInit(): void {
-    //     this.form.controls.code.valueChanges.subscribe((value) => {
-    //         console.log("XXX>>>",value);
-    //     });
-  
-   }
 
     submit(): void {
         const result = {
             email: this.authService.user().email,
+            category: "learner",
+            course: "javascript",
+            level: "beginner",
             answer: this.form.controls.code.value,
             output: this.runOutput,
             exercise: this.exercise,
-            user: this.authService.user()
+            user: this.authService.user(),
+            rate:''
         }
+
+        console.log(result);
         this.exerciseService.postUsersTraining(result)
         .pipe(take(1))
         .subscribe(() => {
@@ -83,7 +83,7 @@ export class LearnerJavascriptComponent {
     }
 
     showExerciseDetails(): void {
-        this.modalService.showExerciseDetails(this.exercise);
+        this.modalService.showExerciseDetailLearner(this.exercise);
     }
 
     runCode(){
@@ -106,8 +106,9 @@ export class LearnerJavascriptComponent {
     }
   
     nextExercise(){
+        console.log(this.exercise.category.chapter)
         this.exerciseService
-        .getLearnerExercise('javascript')
+        .getLearnerNextExercise(this.exercise.type, this.exercise.difficulty, this.exercise.category.chapter)
         .pipe(take(1))
         .subscribe((data) => {
             this.exercise = data[0]

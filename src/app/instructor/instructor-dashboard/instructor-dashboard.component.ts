@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule, Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ExerciseService } from 'src/app/shared/services/exercise.services';
 
 @Component({
   selector: 'app-instructor-dashboard',
@@ -11,8 +12,25 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class InstructorDashboardComponent {
     authService = inject(AuthService);
+    exerciseService = inject(ExerciseService);
     router = inject(Router);
     
+    pyCountAuthoringExercises: number;
+    jsCountAuthoringExercises: number;
+
+    email: string = this.authService.user().email
+
+    constructor(){
+        this.exerciseService.getNumberOfTrainingExercises(this.email, 'instructor', 'python')
+        .subscribe((data) => {
+            this.pyCountAuthoringExercises = parseInt(data)
+        });
+
+        this.exerciseService.getNumberOfTrainingExercises(this.email, 'instructor', 'javascript')
+        .subscribe((data) => {
+            this.jsCountAuthoringExercises = parseInt(data)
+        });
+    }
     goToAuthoringTool(course: string){
         this.router.navigate(['c4c/authoring-tool/', course]);
     }

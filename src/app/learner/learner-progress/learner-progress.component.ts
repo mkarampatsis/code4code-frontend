@@ -1,18 +1,19 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, output, ViewEncapsulation } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { GridLoadingOverlayComponent } from 'src/app/shared/modals/grid-loading-overlay/grid-loading-overlay.component';
 import { ActionIconsLearnerComponent } from 'src/app/shared/components/action-icons-learner/action-icons-learner.component';
 import { ExerciseService } from 'src/app/shared/services/exercise.services';
-import { IUserTraining } from 'src/app/shared/interfaces/user-evaluation';
+import { IUserTraining } from 'src/app/shared/interfaces/exercises';
 import { ConstService } from 'src/app/shared/services/const.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs';
 
 @Component({
   selector: 'app-learner-progress',
   standalone: true,
-  imports: [AgGridAngular, GridLoadingOverlayComponent],
+  imports: [AgGridAngular, GridLoadingOverlayComponent, NgbProgressbarModule],
   templateUrl: './learner-progress.component.html',
   styleUrl: './learner-progress.component.css',
   encapsulation: ViewEncapsulation.None
@@ -23,6 +24,19 @@ export class LearnerProgressComponent {
     exerciseService = inject(ExerciseService);
     exercises: IUserTraining[] = [];
 
+    user = this.authService.user().email
+
+    pyCountTrainingExercises: number;
+    jsCountTrainingExercises: number;
+    pyExercisesSolved: number;
+    pyChaptersCovered: number;
+    pyExercisesCorrect: any;
+    pyExercisesWrong: number;
+    jsExercisesSolved: number;
+    jsChaptersCovered: number;
+    jsExercisesCorrect: number;
+    jsExercisesWrong: number;
+
     defaultColDef = this.constService.defaultColDef;
 
     colDefs: ColDef[] = [
@@ -30,11 +44,11 @@ export class LearnerProgressComponent {
         { field: 'exercise.type', headerName: 'Course', flex: 1 },
         { field: 'exercise.category.chapter', headerName: 'Chapter'},
         { field: 'exercise.difficulty', headerName: 'Difficulty Level'},
-        { field: 'exercise.code', headerName: 'Code'},
+        { field: 'answer', headerName: "User's Code"},
         // { field: 'exercise.output', headerName: 'Correct Answer'},
         { 
             field: 'output', 
-            headerName: "User's Answer",
+            headerName: "User's Output",
             // cellStyle: params => {
             //     const output = params.data.exercise.output.replace("type=oneline ", "").trim()
             //     if (params.value === output) {
@@ -54,6 +68,36 @@ export class LearnerProgressComponent {
     loadingOverlayComponentParams = { loadingMessage: 'Exercise loading...' };
 
     gridApi: GridApi<IUserTraining>;
+
+    constructor() {
+        this.exerciseService.getNumberOfTrainingExercises(this.user, 'learner', 'python')
+        .subscribe((data) => {
+            this.pyCountTrainingExercises = parseInt(data);
+        });
+
+        this.exerciseService.getNumberOfTrainingExercises(this.user, 'learner', 'javascript')
+        .subscribe((data) => {
+            this.jsCountTrainingExercises = parseInt(data)
+        });
+
+        this.exerciseService.getCourseChapters('python')
+        .subscribe((data) => {
+            this.pyExercisesSolved = (this.pyCountTrainingExercises * 100)/data['numOfExercises']
+            this.pyChaptersCovered = data['numOfTrainingByChapter'].length 
+            // console.log(data)
+            // this.pyExercisesCorrect = this.exercises.filter((data)=>{
+            //     const correctAnswer = data.exercise.output[0].replace('type=oneline\n', '').trim()
+            //     console.log("1>>>",output.toString(),"2>>>", correctAnswer.toString())
+            //     return true
+            // }) 
+        });
+
+        this.exerciseService.getCourseChapters('javascript')
+        .subscribe((data) => {
+            this.jsExercisesSolved = (this.jsCountTrainingExercises * 100)/data['numOfExercises']
+            this.jsChaptersCovered = data['numOfTrainingByChapter'].length 
+        });
+    }
 
     onGridReady(params: GridReadyEvent<IUserTraining>): void {
         this.gridApi = params.api;
