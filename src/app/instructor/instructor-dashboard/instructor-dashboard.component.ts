@@ -21,14 +21,14 @@ export class InstructorDashboardComponent {
     email: string = this.authService.user().email
 
     constructor(){
-        this.exerciseService.getNumberOfTrainingExercises(this.email, 'instructor', 'python')
+        this.exerciseService.getExercisesByUserAndCourse(this.email, 'python')
         .subscribe((data) => {
-            this.pyCountAuthoringExercises = parseInt(data)
+            this.pyCountAuthoringExercises = data.length
         });
 
-        this.exerciseService.getNumberOfTrainingExercises(this.email, 'instructor', 'javascript')
+        this.exerciseService.getExercisesByUserAndCourse(this.email, 'javascript')
         .subscribe((data) => {
-            this.jsCountAuthoringExercises = parseInt(data)
+            this.jsCountAuthoringExercises = data.length
         });
     }
     goToAuthoringTool(course: string){

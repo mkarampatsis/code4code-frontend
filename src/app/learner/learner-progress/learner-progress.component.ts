@@ -70,14 +70,14 @@ export class LearnerProgressComponent {
     gridApi: GridApi<IUserTraining>;
 
     constructor() {
-        this.exerciseService.getNumberOfTrainingExercises(this.user, 'learner', 'python')
+        this.exerciseService.getTrainingExercisesByUserCategoryCourse(this.user, 'learner', 'python')
         .subscribe((data) => {
-            this.pyCountTrainingExercises = parseInt(data);
+            this.pyCountTrainingExercises = data.length;
         });
 
-        this.exerciseService.getNumberOfTrainingExercises(this.user, 'learner', 'javascript')
+        this.exerciseService.getTrainingExercisesByUserCategoryCourse(this.user, 'learner', 'javascript')
         .subscribe((data) => {
-            this.jsCountTrainingExercises = parseInt(data)
+            this.jsCountTrainingExercises = data.length
         });
 
         this.exerciseService.getCourseChapters('python')

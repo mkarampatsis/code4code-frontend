@@ -18,7 +18,6 @@ export class ExerciseTheoryExamplesComponent {
     modalRef: any;
 
     ngAfterViewInit() {
-        console.log(this.subintroduction);
         this.proseComponent.setEditorContent(this.subintroduction)
     }
 

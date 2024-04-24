@@ -72,8 +72,8 @@
                     <div class="flex flex-wrap items-center justify-start gap-2 lg:justify-end mx-auto">
                         
                         <a (click)="addHint()" class="button button-outline">
-                            <span *ngIf="!hint">Add Hint</span>
-                            <span *ngIf="hint">Update Hint</span>
+                            <span *ngIf="!hint">Add Hint *</span>
+                            <span *ngIf="hint">Update Hint *</span>
                         </a>
                         <a (click)="addDescription()" class="button button-outline">
                             <span *ngIf="!description">Add Description *</span>
@@ -113,9 +113,22 @@
                                 <path d="M0 3H3V0H0V3ZM0 15H3V6H0V15Z" />
                             </svg> -->
                             </a>
-                        <a class="button button-outline button-outline__white" (click)="onSubmit()">
-                            Submit
-                        </a>
+                        
+                        @if (changeSubmitButton==='Submit'){
+                            <a class="button button-outline button-outline__white" (click)="onSubmit()">
+                                Submit
+                            </a>
+                        }
+                        @if (changeSubmitButton==='Save'){
+                            <a class="button button-outline button-outline__white" (click)="saveExercise()">
+                                Save
+                            </a>
+                        }
+                        @if (changeSubmitButton==='Update'){
+                            <a class="button button-outline button-outline__white" (click)="updateExercise()">
+                                Update
+                            </a>
+                        }
                     </div>
                 </div>
             </div>

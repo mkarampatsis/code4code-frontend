@@ -18,9 +18,9 @@ export class ExerciseRateComponent {
     
     modalRef: any;
     
-    submitRate(exercise:string, value:string){
+    submitRate(value:string){
         const data = {
-            id: exercise,
+            exercise: this.exercise.exercise,
             rate: value
         }
         this.modalRef.close(data);

@@ -35,11 +35,6 @@ import { IUserAssessment } from 'src/app/shared/interfaces/user'
         return this.http.get<IUserLanguageEvaluation[]>(url);
     }
 
-    getNumberOfTrainingExercises(user:string, category:string, course:string):Observable<string> {
-        const url = `${environment.apiURL}/exercises/training/count/${user}/${category}/${course}`;
-        return this.http.get<string>(url);
-    }
-
     postUserAssement(data: Object): Observable<IUserAssessment> {
         const url = `${environment.apiURL}/ml/user_assesment`;
         return this.http.post<IUserAssessment>(url, data);
@@ -55,10 +50,42 @@ import { IUserAssessment } from 'src/app/shared/interfaces/user'
         return this.http.get<IExercise>(url);
     }
 
+    getCourseChapters(course:string): Observable<string[]> {
+        const url = `${environment.apiURL}/exercises/chapters/${course}`;
+        return this.http.get<string[]>(url);
+    }
+
+    postUsersExercise(data:IExercise): Observable<IExercise> {
+        const url = `${environment.apiURL}/exercises/exercise`;
+        return this.http.post<IExercise>(url, data);
+    }
+
+    patchUsersExercise(data:IExercise): Observable<IExercise> {
+        const url = `${environment.apiURL}/exercises/exercise`;
+        return this.http.patch<IExercise>(url, data);
+    }
+
+   
+   
+    // *************************************
+    // **** Training Exercises Requests ****
+    // *************************************
+
+    getTrainingExercisesByUserCategoryCourse(user:string, category:string, course:string):Observable<IUserTraining[]> {
+        const url = `${environment.apiURL}/exercises/training/count/${user}/${category}/${course}`;
+        return this.http.get<IUserTraining[]>(url);
+    }
+    
     postUsersTraining(data:any): Observable<IUserTraining> {
         const url = `${environment.apiURL}/exercises/training`;
         return this.http.post<IUserTraining>(url, data);
     }
+
+    patchUsersTraining(data:any): Observable<IUserTraining> {
+        const url = `${environment.apiURL}/exercises/training`;
+        return this.http.patch<IUserTraining>(url, data);
+    }
+
 
     getUsersTrainingExercises(email:string): Observable<IUserTraining[]> {
         const url = `${environment.apiURL}/exercises/training/${email}`;
@@ -70,19 +97,12 @@ import { IUserAssessment } from 'src/app/shared/interfaces/user'
         return this.http.patch<IUserTraining>(url, data);
     }
 
-    getCourseChapters(course:string): Observable<string[]> {
-        const url = `${environment.apiURL}/exercises/chapters/${course}`;
-        return this.http.get<string[]>(url);
-    }
+    // *****************************
+    // ******** ML Requests ********
+    // *****************************
 
-    postUsersExercise(data:IExercise): Observable<IExercise> {
-        const url = `${environment.apiURL}/exercises/exercise`;
-        return this.http.post<IExercise>(url, data);
-    }
-
-    postChapterCategorization(data:object): Observable<object> {
-        const url = `http://147.102.246.132:7462/code4code/ml/exercise_category`;
+    getExerciseCategorization(data:object): Observable<object> {
+        const url = `${environment.apiURL}/ml/exercise/category`;
         return this.http.post<object>(url, data);
     }
-   
 }

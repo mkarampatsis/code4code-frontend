@@ -21,7 +21,6 @@ export class ExerciseDetailsComponent {
     modalRef: any;
     
     ngOnInit() {
-        console.log(this.exercise)
         if (this.exercise.output.length>0) {
             this.exercise.output = [this.exercise?.output[0].replace('type=oneline\n', '').trim()]
         } else {

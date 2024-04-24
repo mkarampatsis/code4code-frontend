@@ -21,7 +21,6 @@ export class ExersiceSubmitComponent {
     modalRef: any;
     
     ngOnInit() {
-        console.log(this.exercise)
         if (this.exercise.output.length>0) {
             this.exercise.output = [this.exercise?.output[0].replace('type=oneline\n', '').trim()]
         } else {
@@ -30,15 +29,13 @@ export class ExersiceSubmitComponent {
     }
 
     approve() {
-        const data = {
-            "id": this.exerciseService.exercise$().exercise,
-            "code": this.exerciseService.exercise$().code,
-            "description": this.exerciseService.exercise$().exercise_description[0]
-        }
-        console.log(data);
-        this.exerciseService.postChapterCategorization(data)
-        .subscribe((result)=>{
-            console.log(result)
+        this.exerciseService.getExerciseCategorization(this.exercise)
+        .subscribe((result: IExercise)=>{
+            this.exercise = result;
         })
+    }
+
+    closeModal(){
+        this.modalRef.close(this.exercise);
     }
 }

@@ -16,6 +16,7 @@ import {
 } from 'src/app/shared/modals'
 import { IExercise } from 'src/app/shared/interfaces/exercises';
 import { ExerciseService } from './exercise.services';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root',
@@ -23,6 +24,7 @@ import { ExerciseService } from './exercise.services';
 export class ModalService {
     modalService = inject(NgbModal);
     exerciseService = inject(ExerciseService)
+    authservice = inject(AuthService)
 
 
     /***************************/
@@ -69,7 +71,6 @@ export class ModalService {
     }
 
     showExerciseRateInstructor(exercise: IExercise) {
-        console.log(exercise)
         const data = {
             exercise: exercise
         }
@@ -81,18 +82,35 @@ export class ModalService {
         modalRef.componentInstance.modalRef = modalRef;
         modalRef.result.then(
             result => {
-                // const data = {
-                //     email:string,
-                //     category: "instractor",
-                //     course: exercise.exercise.type,
-                //     level: TUserLevel,
-                //     answer: string,
-                //     output: string,
-                //     exercise: IExercise,
-                //     user: IUser,
-                //     rate: string
-                // }
-                console.log(result) 
+                const data = {
+                    email:this.authservice.user().email,
+                    category: "instructor",
+                    course: result.exercise.type,
+                    level: "none",
+                    answer: "",
+                    output: "",
+                    exercise: result.exercise,
+                    user: this.authservice.user(),
+                    rate: result.rate
+                }
+                this.exerciseService.getTrainingExercisesByUserCategoryCourse(this.authservice.user().email, "instructor",result.exercise.type)
+                .subscribe((exercises)=>{
+                    const found = exercises.filter((item) => 
+                        item.exercise.exercise === result.exercise.exercise
+                    )
+                    if (found.length > 0) {
+                        console.log("found>>",data)
+                        this.exerciseService.patchUsersTraining(data)
+                            .subscribe((result) =>{
+                                console.log(result);
+                            })
+                    } else {
+                        this.exerciseService.postUsersTraining(data)
+                            .subscribe((result) =>{
+                                console.log(result);
+                            })
+                    }
+                })
                 // this.exerciseService.setTrainingExerciseRate(result)
                 // .subscribe((result) => {
                 //     this.exerciseService.trainingExercises.set(result)
@@ -210,13 +228,7 @@ export class ModalService {
         modalRef.componentInstance.modalRef = modalRef;
         modalRef.result.then(
             result => { 
-                result = {
-                    category: {
-                        chapter: result.chapter,
-                        subchapter:[result.subchapter]
-                    }
-                } 
-                this.exerciseService.exercise$.set({...this.exerciseService.exercise$(), ...result})
+                this.exerciseService.exercise$.set(result)
             }
         )
     }

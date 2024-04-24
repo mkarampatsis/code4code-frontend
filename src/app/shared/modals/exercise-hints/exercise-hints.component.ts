@@ -26,7 +26,6 @@ export class ExerciseHintsComponent implements OnInit {
             this.form = this.formBuilder.group({
                 hints: this.formBuilder.array([])
             });
-            console.log("xxxx");
             this.data.forEach((hint)=> {
                 this.hint.push(
                     this.formBuilder.group({

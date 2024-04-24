@@ -4,6 +4,7 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { GridLoadingOverlayComponent } from 'src/app/shared/modals/grid-loading-overlay/grid-loading-overlay.component';
 import { ActionIconsComponent } from 'src/app/shared/components/action-icons/action-icons.component';
 import { ExerciseService } from 'src/app/shared/services/exercise.services';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { IExercise } from 'src/app/shared/interfaces/exercises';
 import { RouterModule } from '@angular/router';
 import { map, take } from 'rxjs';
@@ -21,6 +22,7 @@ import { ConstService } from 'src/app/shared/services/const.service';
 export class ExercisePreviewComponent {
     constService = inject(ConstService);
     exerciseService = inject(ExerciseService);
+    authService = inject(AuthService);
     exercises: IExercise[] = [];
 
     defaultColDef = this.constService.defaultColDef;
@@ -39,11 +41,28 @@ export class ExercisePreviewComponent {
 
     gridApi: GridApi<IExercise>;
 
+    pyCourse: boolean;
+    jsCourse: boolean;
+    course: string;
+
+    constructor() {
+        this.pyCourse = true? this.authService.isCourseInstructor('python'): false;
+        this.jsCourse = true? this.authService.isCourseInstructor('javascript'): false;
+        
+        if (this.pyCourse && this.jsCourse) {
+            this.course = "all"
+        } else if (this.pyCourse) {
+            this.course = "python"
+        } else {
+            this.course = "javascript"
+        }
+    }
+
     onGridReady(params: GridReadyEvent<IExercise>): void {
         this.gridApi = params.api;
         this.gridApi.showLoadingOverlay();
         this.exerciseService
-            .getExercises("python")
+            .getExercises(this.course)
             .pipe(
                 take(1),
             )

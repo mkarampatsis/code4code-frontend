@@ -23,14 +23,14 @@ export class LearnerDashboardComponent {
     email: string = this.authService.user().email
 
     constructor() {
-        this.exerciseService.getNumberOfTrainingExercises(this.email, 'learner', 'python')
+        this.exerciseService.getTrainingExercisesByUserCategoryCourse(this.email, 'learner', 'python')
         .subscribe((data) => {
-            this.pyCountTrainingExercises = parseInt(data)
+            this.pyCountTrainingExercises = data.length
         });
 
-        this.exerciseService.getNumberOfTrainingExercises(this.email, 'learner', 'javascript')
+        this.exerciseService.getTrainingExercisesByUserCategoryCourse(this.email, 'learner', 'javascript')
         .subscribe((data) => {
-            this.jsCountTrainingExercises = parseInt(data)
+            this.jsCountTrainingExercises = data.length
         });
     }
 

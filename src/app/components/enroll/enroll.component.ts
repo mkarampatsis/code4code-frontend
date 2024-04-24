@@ -34,27 +34,27 @@ export class EnrollComponent {
     tryForFree: boolean = true;
 
     constructor() {
-        this.exerciseService.getNumberOfTrainingExercises(this.user, 'learner', 'python')
+        this.exerciseService.getTrainingExercisesByUserCategoryCourse(this.user, 'learner', 'python')
         .subscribe((data) => {
-            this.pyCountTrainingExercises = parseInt(data);
+            this.pyCountTrainingExercises = data.length;
             this.pyCheckForTrialLearner = true? this.pyCountTrainingExercises<10: false;
         });
 
-        this.exerciseService.getNumberOfTrainingExercises(this.user, 'learner', 'javascript')
+        this.exerciseService.getTrainingExercisesByUserCategoryCourse(this.user, 'learner', 'javascript')
         .subscribe((data) => {
-            this.jsCountTrainingExercises = parseInt(data)
+            this.jsCountTrainingExercises = data.length
             this.jsCheckForTrialLearner = true? this.jsCountTrainingExercises<10: false;
         });
 
-        this.exerciseService.getNumberOfTrainingExercises(this.user, 'instructor', 'python')
+        this.exerciseService.getTrainingExercisesByUserCategoryCourse(this.user, 'instructor', 'python')
         .subscribe((data) => {
-            this.pyCountAuthoringExercises = parseInt(data)
+            this.pyCountAuthoringExercises = data.length
             this.pyCheckForTrialInstructor = true? this.pyCountAuthoringExercises<10: false;
         });
 
-        this.exerciseService.getNumberOfTrainingExercises(this.user, 'instructor', 'javascript')
+        this.exerciseService.getTrainingExercisesByUserCategoryCourse(this.user, 'instructor', 'javascript')
         .subscribe((data) => {
-            this.jsCountAuthoringExercises = parseInt(data)
+            this.jsCountAuthoringExercises = data.length
             this.jsCheckForTrialInstructor = true? this.jsCountAuthoringExercises<10: false;
         });
     }

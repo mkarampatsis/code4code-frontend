@@ -57,6 +57,7 @@ export class AuthoringToolComponent {
 
     checkData: boolean = true;
     isNewExercise: boolean = true;
+    changeSubmitButton: string = "Submit"
 
     form = new FormGroup({
         code: new FormControl(''),
@@ -64,28 +65,7 @@ export class AuthoringToolComponent {
 
 
     constructor(){
-        const uuid = shortUUID()
-
-        this.course = this.route.snapshot.params['course'];
-        this.exerciseService.exercise$.set({
-            introduction: [],
-            subintroduction: [],
-            exercise_description: [],
-            category: {
-                chapter: "",
-                subchapter: []
-            },
-            hints: [],
-            author: {
-                name: this.authService.user().name,
-                email: this.authService.user().email
-            },
-            type: this.course,
-            code: "",
-            output: [],
-            exercise: uuid.generate(),
-            difficulty: ""
-        })
+        this.initExercise();
         this.exercise = this.exerciseService.exercise$()
         this.addToOutput("Ready!<br>"); 
         
@@ -102,7 +82,7 @@ export class AuthoringToolComponent {
             this.code = true? this.exerciseService.exercise$().code.trim().length!=0 && this.exerciseService.exercise$().output.length>0: false;
 
             
-            if (this.description && this.difficulty && this.code) {
+            if (this.hint && this.description && this.difficulty && this.code) {
                 this.checkData = false
             } else {
                 this.checkData = true
@@ -110,25 +90,9 @@ export class AuthoringToolComponent {
 
             if (this.code) {
                 this.form.controls['code'].setValue(this.exerciseService.exercise$().code);
-                console.log("Code", this.code);
             }
             // this.checkData = false? this.description && this.difficulty && this.code: true;
         });
-    }
-
-    onSubmit() {
-        if (!this.checkData && this.isNewExercise ){
-            this.modalService.showSubmitDetails(this.exerciseService.exercise$())
-
-            // this.exerciseService.postUsersExercise(this.exerciseService.exercise$())
-            // .subscribe((result)=>{
-            //     console.log(result);
-            //     // this.showSuccess(this.successTpl);
-            // })
-        } else {
-            this.modalService.showSubmitDetails(this.exerciseService.exercise$())
-            console.log("Modified")
-        }
     }
 
     showExerciseDetails() {
@@ -215,7 +179,8 @@ export class AuthoringToolComponent {
     }
 
     loadExercises(){
-        this.modalService.loadExercisesByUserAndCourse('python')
+        this.modalService.loadExercisesByUserAndCourse(this.course)
+        this.isNewExercise = false;
     }
 
     addToOutput(msg: string) {
@@ -232,4 +197,60 @@ export class AuthoringToolComponent {
         };
         this.toastService.show(toast);
     }
+
+    onSubmit() {
+        if (!this.checkData && this.isNewExercise ){
+            this.changeSubmitButton = "Save"
+           
+        } else {
+            this.changeSubmitButton = "Update"
+        }
+        this.modalService.showSubmitDetails(this.exerciseService.exercise$())
+    }
+
+    saveExercise(){
+        this.exerciseService.postUsersExercise(this.exerciseService.exercise$())
+        .subscribe((result)=>{
+            this.initExercise();
+            // this.showSuccess(this.successTpl);
+        })
+    }
+
+    updateExercise(){
+         this.exerciseService.patchUsersExercise(this.exerciseService.exercise$())
+        .subscribe((result)=>{
+            this.initExercise();
+            // this.showSuccess(this.successTpl);
+        })
+    }
+
+    initExercise(){
+        const uuid = shortUUID()
+
+        this.course = this.route.snapshot.params['course'];
+        this.exerciseService.exercise$.set({
+            introduction: [],
+            subintroduction: [],
+            exercise_description: [],
+            category: {
+                chapter: "",
+                subchapter: []
+            },
+            hints: [],
+            author: {
+                name: this.authService.user().name,
+                email: this.authService.user().email
+            },
+            type: this.course,
+            code: "",
+            output: [],
+            exercise: uuid.generate(),
+            difficulty: ""
+        })
+        this.changeSubmitButton = "Submit"
+        this.form.controls['code'].setValue('')
+        this.output = ''
+    }
+
+   
 }
