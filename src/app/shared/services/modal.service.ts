@@ -228,7 +228,10 @@ export class ModalService {
         modalRef.componentInstance.modalRef = modalRef;
         modalRef.result.then(
             result => { 
+                console.log("Submit", result)
+                this.exerciseService.isApproved$.set(true);
                 this.exerciseService.exercise$.set(result)
+
             }
         )
     }

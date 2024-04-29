@@ -54,6 +54,7 @@ export class AuthoringToolComponent {
     description: boolean = false;
     difficulty: boolean = false;
     code: boolean = false;
+    category: boolean = false;
 
     checkData: boolean = true;
     isNewExercise: boolean = true;
@@ -80,9 +81,10 @@ export class AuthoringToolComponent {
             this.description = true? this.exerciseService.exercise$().exercise_description.length>0 : false;
             this.difficulty = true? this.exerciseService.exercise$().difficulty.trim().length != 0: false;
             this.code = true? this.exerciseService.exercise$().code.trim().length!=0 && this.exerciseService.exercise$().output.length>0: false;
+            this.category = true? this.exerciseService.exercise$().category.chapter.trim().length!=0: false
 
             
-            if (this.hint && this.description && this.difficulty && this.code) {
+            if (this.category && this.hint && this.description && this.difficulty && this.code) {
                 this.checkData = false
             } else {
                 this.checkData = true
@@ -92,6 +94,16 @@ export class AuthoringToolComponent {
                 this.form.controls['code'].setValue(this.exerciseService.exercise$().code);
             }
             // this.checkData = false? this.description && this.difficulty && this.code: true;
+
+            if (this.exerciseService.isApproved$) {
+                if (!this.checkData){
+                    if (this.isNewExercise ){
+                        this.changeSubmitButton = "Save"
+                    } else {
+                        this.changeSubmitButton = "Update"
+                    }
+                }
+            }
         });
     }
 
@@ -199,12 +211,6 @@ export class AuthoringToolComponent {
     }
 
     onSubmit() {
-        if (!this.checkData && this.isNewExercise ){
-            this.changeSubmitButton = "Save"
-           
-        } else {
-            this.changeSubmitButton = "Update"
-        }
         this.modalService.showSubmitDetails(this.exerciseService.exercise$())
     }
 
@@ -228,6 +234,8 @@ export class AuthoringToolComponent {
         const uuid = shortUUID()
 
         this.course = this.route.snapshot.params['course'];
+        this.exerciseService.isApproved$.set(false);
+        
         this.exerciseService.exercise$.set({
             introduction: [],
             subintroduction: [],

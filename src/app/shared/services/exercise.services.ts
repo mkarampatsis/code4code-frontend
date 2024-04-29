@@ -14,6 +14,7 @@ import { IUserAssessment } from 'src/app/shared/interfaces/user'
   
     trainingExercises = signal(<IUserTraining | null>null);
     exercise$ = signal(<IExercise>null);
+    isApproved$ = signal(false)
     
     getExercise(code: string): Observable<IExercise> {
         const url = `${environment.apiURL}/exercises/one/${code}`;
