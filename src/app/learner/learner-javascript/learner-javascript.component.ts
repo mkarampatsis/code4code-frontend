@@ -55,7 +55,7 @@ export class LearnerJavascriptComponent {
         .pipe(take(1))
         .subscribe((data) => {
             this.exercise = data
-            this.form.controls['code'].setValue(this.exercise.code)
+            // this.form.controls['code'].setValue(this.exercise.code)
             this.output = ''
             this.addToOutput("Ready!<br>"); 
         })
@@ -112,7 +112,7 @@ export class LearnerJavascriptComponent {
         .pipe(take(1))
         .subscribe((data) => {
             this.exercise = data[0]
-            this.form.controls['code'].setValue(this.exercise.code)
+            // this.form.controls['code'].setValue(this.exercise.code)
             this.output = ''
             this.addToOutput("Ready!<br>"); 
         })
