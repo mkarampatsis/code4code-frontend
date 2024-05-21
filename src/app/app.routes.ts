@@ -14,6 +14,7 @@ import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { PayformComponent } from './components/payform/payform.component';
 import { EnrollComponent } from './components/enroll/enroll.component';
+import { FundingComponent } from './components/funding/funding.component';
 
 // Instructor Imports
 import { AuthoringToolComponent } from './instructor/authoring-tool/authoring-tool.component';
@@ -45,6 +46,10 @@ export const routes: Routes = [
   { path: 'c4c/dashboard', component: DashboardComponent, canActivate: [loggedInGuard], },
   { path: 'c4c/enroll', component: EnrollComponent, canActivate: [loggedInGuard], },
   { path: 'c4c/payform', component: PayformComponent, canActivate: [loggedInGuard], },
+  { path: 'c4c/funding', component:  FundingComponent
+
+  
+  },
   
   // Instructors Routes
   { path: 'c4c/instructor/dashboard', component: InstructorDashboardComponent, canActivate: [loggedInGuard] },
